@@ -127,7 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CTestView.cpp" />
+    <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="IslandGame.cpp" />
+    <ClCompile Include="KeyboardHandler.cpp" />
+    <ClCompile Include="KeyboardListener.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CTestView.h" />
+    <ClInclude Include="Frame.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="KeyboardHandler.h" />
+    <ClInclude Include="KeyboardListener.h" />
+    <ClInclude Include="View.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
