@@ -1,6 +1,8 @@
 #pragma once
+#include<string>
+
 class IView {
 public:
-	virtual void show() = 0;
+	virtual std::string show() = 0;
 };
 

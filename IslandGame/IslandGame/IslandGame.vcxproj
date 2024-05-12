@@ -127,19 +127,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractView.cpp" />
     <ClCompile Include="CTestView.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IslandGame.cpp" />
     <ClCompile Include="KeyboardHandler.cpp" />
-    <ClCompile Include="KeyboardListener.cpp" />
+    <ClCompile Include="MenuView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractView.h" />
     <ClInclude Include="CTestView.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="KeyboardListener.h" />
+    <ClInclude Include="MenuView.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

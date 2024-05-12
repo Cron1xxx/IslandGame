@@ -7,9 +7,10 @@ class CKeyboardHandler {
 public:
 	CKeyboardHandler();
 	void setListener(IKeyboardListener* listener);
+	void run();
 
 private:
 	IKeyboardListener* mpListener;
-	void run();
+	
 };
 

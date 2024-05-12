@@ -1,15 +1,14 @@
 #pragma once
 
-#include "View.h"
-#include "KeyboardListener.h"
-#include "Frame.h"
+#include "AbstractView.h"
 
-class CTestView : public IView, public IKeyboardListener{
+class CTestView : public CAbstractView{
 public:
-	CTestView(CFrame* frame);
-	void show();
-	void keypressed(WORD keyCode);
+	CTestView(CGame* game);
+	virtual std::string show();
+	virtual void keypressed(WORD keyCode);
+	
 private:
-	CFrame* mpFrame;
+	bool mExit;
 };
 

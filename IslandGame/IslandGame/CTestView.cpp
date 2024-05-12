@@ -4,13 +4,21 @@
 
 using namespace std;
 
-CTestView::CTestView(CFrame* frame) {
-	mpFrame = frame;
+CTestView::CTestView(CGame* game) : CAbstractView(game) {
+	
 }
 
-void CTestView::show() {
-	cout<<"I'm test view!!!"<<endl;
+std::string CTestView::show() {
+	mExit = false;
+	while (!mExit) {
+
+	}
+	return "menu_view";
 }
 
 void CTestView::keypressed(WORD keyCode) {
+	printf("TestView key %d pressed\n", keyCode);
+	if (keyCode == 69) {
+		mExit = true;
+	}
 }
