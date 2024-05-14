@@ -1,8 +1,9 @@
 #pragma once
 #include<string>
+#include"Structures.h"
 
 class IView {
 public:
-	virtual std::string show() = 0;
+	virtual NEXT_VIEW_INFO show() = 0;
 };
 

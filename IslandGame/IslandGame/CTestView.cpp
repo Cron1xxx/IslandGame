@@ -4,16 +4,18 @@
 
 using namespace std;
 
-CTestView::CTestView(CGame* game) : CAbstractView(game) {
+CTestView::CTestView(CGame* game, SIZE size) : CAbstractView(game, size) {
 	
 }
 
-std::string CTestView::show() {
+NEXT_VIEW_INFO CTestView::show() {
 	mExit = false;
 	while (!mExit) {
 
 	}
-	return "menu_view";
+	NEXT_VIEW_INFO nextViewInfo;
+	nextViewInfo.mViewType = EViewType::MENU_VIEW;
+	return nextViewInfo;
 }
 
 void CTestView::keypressed(WORD keyCode) {

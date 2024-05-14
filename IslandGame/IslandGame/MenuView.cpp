@@ -1,13 +1,20 @@
 #include "MenuView.h"
 #include <cstdio>
 
-CMenuView::CMenuView(CGame* game) : CAbstractView(game){}
+CMenuView::CMenuView(CGame* game, SIZE size) : CAbstractView(game, size){}
 
-std::string CMenuView::show() {
+NEXT_VIEW_INFO CMenuView::show() {
 	mExit = false;
 	while (!mExit) {
+		render();
 	}
-	return "test_view";
+	NEXT_VIEW_INFO nextViewInfo;
+	nextViewInfo.mViewType = EViewType::TEST_VIEW;
+	return nextViewInfo;
+}
+
+void CMenuView::render(){
+	system("cls");
 }
 
 void CMenuView::keypressed(WORD keyCode) {
@@ -16,3 +23,4 @@ void CMenuView::keypressed(WORD keyCode) {
 		mExit = true;
 	}
 }
+

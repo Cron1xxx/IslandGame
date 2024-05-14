@@ -4,8 +4,8 @@
 
 class CTestView : public CAbstractView{
 public:
-	CTestView(CGame* game);
-	virtual std::string show();
+	CTestView(CGame* game, SIZE size);
+	virtual NEXT_VIEW_INFO show();
 	virtual void keypressed(WORD keyCode);
 	
 private:

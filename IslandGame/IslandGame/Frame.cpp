@@ -9,15 +9,20 @@
 
 
 CFrame::CFrame() {
+	SIZE size;
+	size.cx = 60;
+	size.cy = 50;
 	mpKeyboardHandler = new CKeyboardHandler();
-	mpMenuView = new CMenuView(mpGame);
-	mpTestView = new CTestView(mpGame);
+	mpMenuView = new CMenuView(mpGame, size);
+	mpTestView = new CTestView(mpGame, size);
 }
 
 void CFrame::run() {
-	mKeyboardHandlingThread = new thread(&CFrame::runThreadKeyboardHandler, this, mpKeyboardHandler);
-	setActiveView("menu_view");
-	std::string nextView;
+	mKeyboardHandlingThread = new thread(&CKeyboardHandler::run, mpKeyboardHandler);
+	NEXT_VIEW_INFO nextView;
+	nextView.mViewType = EViewType::MENU_VIEW;
+	setActiveView(nextView);
+	
 	while (true) {
 		nextView = mpActiveView->show();
 		setActiveView(nextView);
@@ -25,16 +30,12 @@ void CFrame::run() {
 }
 
 
-void CFrame::runThreadKeyboardHandler(CKeyboardHandler* handler) {
-	mpKeyboardHandler->run();
-}
-
-void CFrame::setActiveView(std::string viewName) {
-	if (viewName.compare("menu_view") == 0) {
+void CFrame::setActiveView(NEXT_VIEW_INFO nextViewInfo) {
+	if (nextViewInfo.mViewType == EViewType::MENU_VIEW) {
 		mpKeyboardHandler->setListener(mpMenuView);
 		mpActiveView = mpMenuView;
 		
-	} else if (viewName.compare("test_view") == 0) {
+	} else if (nextViewInfo.mViewType == EViewType::TEST_VIEW) {
 		mpKeyboardHandler->setListener(mpTestView);
 		mpActiveView = mpTestView;
 	};

@@ -23,9 +23,8 @@ private:
 	CAbstractView* mpTestView;
 
 	CKeyboardHandler* mpKeyboardHandler;
-	void runThreadKeyboardHandler(CKeyboardHandler* handler);
 	thread* mKeyboardHandlingThread;
-	void setActiveView(string viewName);
+	void setActiveView(NEXT_VIEW_INFO nextViewInfo);
 	//map<string, unique_ptr<CAbstractView>> *mViewMap;
 	
 };
