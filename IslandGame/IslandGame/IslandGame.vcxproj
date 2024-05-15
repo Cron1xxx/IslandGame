@@ -134,6 +134,7 @@
     <ClCompile Include="IslandGame.cpp" />
     <ClCompile Include="KeyboardHandler.cpp" />
     <ClCompile Include="MenuView.cpp" />
+    <ClCompile Include="Surface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractView.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="MenuView.h" />
     <ClInclude Include="Structures.h" />
+    <ClInclude Include="Surface.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -10,8 +10,8 @@
 
 CFrame::CFrame() {
 	SIZE size;
-	size.cx = 60;
-	size.cy = 50;
+	size.cx = 120;
+	size.cy = 40;
 	mpKeyboardHandler = new CKeyboardHandler();
 	mpMenuView = new CMenuView(mpGame, size);
 	mpTestView = new CTestView(mpGame, size);
