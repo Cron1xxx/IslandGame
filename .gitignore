@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/IslandGame/.vs/IslandGame
+/IslandGame/IslandGame/x64/Debug
+/IslandGame/x64/Debug
+/IslandGame/Debug
+/IslandGame/IslandGame/Debug
