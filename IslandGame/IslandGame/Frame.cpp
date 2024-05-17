@@ -5,16 +5,24 @@
 #include <windows.h>
 #include "CTestView.h"
 #include "MenuView.h"
-
+#include <strsafe.h>
+#include "Constants.h"
 
 
 CFrame::CFrame() {
 	SIZE size;
-	size.cx = 120;
-	size.cy = 40;
+	size.cx = WINDOW_WIGHT;
+	size.cy = WINDOW_HEIGHT;
+	TCHAR szNewTitle[MAX_PATH];
+	StringCchPrintf(szNewTitle, MAX_PATH, TEXT("Island Game"));
+	SetConsoleTitle(szNewTitle);
+	HANDLE hConsoleOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleScreenBufferSize(hConsoleOutput, {(SHORT)size.cx, (SHORT)size.cy});
+	SMALL_RECT rect = {0, 0, size.cx, size.cy};
+	SetConsoleWindowInfo(hConsoleOutput, TRUE, &rect);
 	mpKeyboardHandler = new CKeyboardHandler();
-	mpMenuView = new CMenuView(mpGame, size);
-	mpTestView = new CTestView(mpGame, size);
+	mpMenuView = new CMenuView(mpGame, size, hConsoleOutput);
+	mpTestView = new CTestView(mpGame, size, hConsoleOutput);
 }
 
 void CFrame::run() {
@@ -27,6 +35,7 @@ void CFrame::run() {
 		nextView = mpActiveView->show();
 		setActiveView(nextView);
 	}
+	
 }
 
 

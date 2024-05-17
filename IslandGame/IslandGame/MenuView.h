@@ -3,7 +3,7 @@
 
 class CMenuView : public CAbstractView {
 public:
-	CMenuView(CGame* game, SIZE size);
+	CMenuView(CGame* game, SIZE size, HANDLE hConsoleOutput);
 	NEXT_VIEW_INFO show();
 	void keypressed(WORD keyCode);
 

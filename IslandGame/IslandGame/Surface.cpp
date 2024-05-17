@@ -2,54 +2,50 @@
 #include <iostream>
 using namespace std;
 
-CSurface::CSurface(SIZE size) : mSize(size){
-	mSurface = new char*[mSize.cy];
-	for (int i = 0; i < mSize.cy; i++) {
-		mSurface[i] = new char[mSize.cx];
+CSurface::CSurface(SIZE size, HANDLE hConsoleOutput) : mSize(size){
+	mhConsoleOutput = hConsoleOutput;
+	mBufferSize = {(SHORT)mSize.cx, (SHORT)mSize.cy};
+	mBufferCoord = {0, 0};
+	mRegion = {0, 0, (SHORT)mSize.cx - 1, (SHORT)mSize.cy - 1};
+	for (int y = 0; y < mSize.cy; y++) {
+		for (int x = 0; x < mSize.cx; x++) {
+			mBuffer[y][x].Char.AsciiChar = ' ';
+			mBuffer[y][x].Attributes = 0x07;
+		}
 	}
 }
 
 CSurface::~CSurface() {
-	for (int i = 0; i < mSize.cy; i++) {
-		delete[] mSurface[i];
-	}
-	delete[] mSurface;
 }
 
-void CSurface::fill(char ch) {
+void CSurface::fill(CHAR ch) {
 	for (int i = 0; i < mSize.cy; i++ ) {
 		for (int j = 0; j < mSize.cx; j++) {
-			mSurface[i][j] = ch;
+			mBuffer[i][j].Char.AsciiChar = ch;
 		}
 	}
 }
 
 void CSurface::print() {
-	system("cls");
-	for (int i = 0; i < mSize.cy; i++) {
-		for (int j = 0; j < mSize.cx; j++) {
-			cout << mSurface[i][j];
-		}
-		cout << endl;
-	}
+	WriteConsoleOutputA(mhConsoleOutput, (CHAR_INFO*) mBuffer, mBufferSize, mBufferCoord, &mRegion);
 }
 
 void CSurface::drawRect(_RECTL rect) {
-	int hight = rect.bottom - rect.top;
+	int height = rect.bottom - rect.top;
 	int width = rect.right - rect.left;
-	for ( int i = 0; i <= hight; i++ ) {
-		if (i == 0 || i == hight - 1) {
-			for (int j = 1; j < width; j++) {
-				mSurface[i + rect.top][j + rect.left] = '-';
+	for ( int y = 0; y <= height; y++ ) {
+		if (y == 0 || y == height) {
+			for (int x = 1; x < width; x++) {
+				mBuffer[y + rect.top][x + rect.left].Char.AsciiChar = '-';
 			}
 		} else {
-			mSurface[i + rect.top][rect.left] = '|';
-			mSurface[i + rect.top][width + rect.left] = '|';
+			mBuffer[y + rect.top][rect.left].Char.AsciiChar = '|';
+			mBuffer[y + rect.top][width + rect.left].Char.AsciiChar = '|';
 		}
 
 	}
-	mSurface[rect.top][rect.left] = '+';
-	mSurface[rect.top][rect.right] = '+';
-	mSurface[rect.bottom][rect.left] = '+';
-	mSurface[rect.bottom][rect.right] = '+';
+	mBuffer[rect.top][rect.left].Char.AsciiChar = '+';
+	mBuffer[rect.top][rect.right].Char.AsciiChar = '+';
+	mBuffer[rect.bottom][rect.left].Char.AsciiChar = '+';
+	mBuffer[rect.bottom][rect.right].Char.AsciiChar = '+';
 }

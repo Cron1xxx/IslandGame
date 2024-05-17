@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractView.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="CTestView.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />

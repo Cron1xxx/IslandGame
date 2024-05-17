@@ -7,7 +7,7 @@
 
 class CAbstractView :public IView , public IKeyboardListener {
 public:
-	CAbstractView(CGame* game, SIZE size);
+	CAbstractView(CGame* game, SIZE size, HANDLE hConsoleOutput);
 	~CAbstractView();
 	virtual NEXT_VIEW_INFO show() = 0;
 	virtual void keypressed(WORD keyCode) = 0;
