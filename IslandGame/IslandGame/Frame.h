@@ -22,6 +22,7 @@ private:
 	
 	CAbstractView* mpMenuView;
 	CAbstractView* mpTestView;
+	CAbstractView* mpSceneView;
 
 	CKeyboardHandler* mpKeyboardHandler;
 	thread* mKeyboardHandlingThread;

@@ -5,6 +5,7 @@
 #include <windows.h>
 #include "CTestView.h"
 #include "MenuView.h"
+#include "SceneView.h"
 #include <strsafe.h>
 #include "Constants.h"
 
@@ -23,6 +24,7 @@ CFrame::CFrame() {
 	mpKeyboardHandler = new CKeyboardHandler();
 	mpMenuView = new CMenuView(mpGame, size, hConsoleOutput);
 	mpTestView = new CTestView(mpGame, size, hConsoleOutput);
+	mpSceneView = new CSceneView(mpGame, size, hConsoleOutput);
 }
 
 void CFrame::run() {
@@ -47,9 +49,9 @@ void CFrame::setActiveView(NEXT_VIEW_INFO nextViewInfo) {
 		mpKeyboardHandler->setListener(mpMenuView);
 		mpActiveView = mpMenuView;
 		
-	} else if (nextViewInfo.mViewType == EViewType::TEST_VIEW) {
-		mpKeyboardHandler->setListener(mpTestView);
-		mpActiveView = mpTestView;
+	} else if (nextViewInfo.mViewType == EViewType::SCENE_VIEW) {
+		mpKeyboardHandler->setListener(mpSceneView);
+		mpActiveView = mpSceneView;
 	};
 }
 

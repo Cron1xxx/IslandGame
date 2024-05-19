@@ -126,8 +126,7 @@ NEXT_VIEW_INFO CMenuView::CMenu::CNewGameMenuItem::action() {
 		delete mpGame;
 	}
 	mpGame = new CGame();
-	//TODO: next view game scene view
-	return NEXT_VIEW_INFO();
+	return {EViewType::SCENE_VIEW};
 }
 
 CMenuView::CMenu::CExitMenuItem::CExitMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
