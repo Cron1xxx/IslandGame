@@ -1,14 +1,19 @@
 #pragma once
 #include <Windows.h>
 #include "Constants.h"
+#include "Structures.h"
+#include <atlstr.h>
 
 class CSurface {
 public:
 	CSurface(SIZE size, HANDLE hConsoleOutput);
 	~CSurface();
 	void print();
-	void fill(CHAR ch);
-	void drawRect(_RECTL);
+	void printRegion(SHORT x, SHORT y, SHORT x2, SHORT y2);
+	void fill(CHAR ch, WORD attr);
+	void drawRect(_RECTL rect, EFrameType frameType, WORD attr);
+	void drawText(COORD pos, CString text, WORD attr);
+	void drawChar(COORD pos, CHAR ch, WORD attr);
 private:
 	SIZE mSize;
 	CHAR_INFO mBuffer[WINDOW_HEIGHT][WINDOW_WIGHT];
