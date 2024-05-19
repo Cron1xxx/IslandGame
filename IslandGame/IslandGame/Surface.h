@@ -12,6 +12,7 @@ public:
 	void printRegion(SHORT x, SHORT y, SHORT x2, SHORT y2);
 	void fill(CHAR ch, WORD attr);
 	void drawRect(_RECTL rect, EFrameType frameType, WORD attr);
+	void drawRect(_RECTL rect, EFrameType frameType, WORD attr, CString text, EAlignment horizontalAlignment);
 	void drawText(COORD pos, CString text, WORD attr);
 	void drawChar(COORD pos, CHAR ch, WORD attr);
 private:

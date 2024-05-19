@@ -65,6 +65,28 @@ void CSurface::drawRect(_RECTL rect, EFrameType frameType, WORD attr) {
 	drawChar({ (SHORT)(rect.right), (SHORT)(rect.bottom) }, *(pFrameChars + 3), attr); /*'╝'*/
 }
 
+void CSurface::drawRect(_RECTL rect, EFrameType frameType, WORD attr, CString text, EAlignment horizontalAlignment) {
+	drawRect(rect, frameType, attr);
+	auto rectWight = rect.right - rect.left;
+	auto rectHeight = rect.bottom - rect.top; 
+	auto textLength = text.GetLength();
+	if (textLength > rectWight - 2) {
+		text = text.Left(rectWight - 2);
+		textLength = text.GetLength();
+	}
+	for (SHORT y = 1; y < rectHeight; y++) {
+		for (SHORT x = 1; x < rectWight; x++) {
+			drawChar({(SHORT)(rect.left + x), (SHORT)(rect.top + y)}, ' ', attr);
+		}
+	}
+	if (horizontalAlignment == EAlignment::LEFT) {
+		drawText({(SHORT)(rect.left + 1), (SHORT)(rect.top + 1)}, text, attr);
+	} else if (horizontalAlignment == EAlignment::CENTER) {
+		drawText({(SHORT)(rect.left + rectWight / 2 - textLength / 2), (SHORT)(rect.top + 1)}, text, attr);
+	}
+
+}
+
 void CSurface::drawText(COORD pos, CString text, WORD attr) {
 	for (SHORT i = 0; i < text.GetLength(); i++) {
 		drawChar({(SHORT)(pos.X + i), pos.Y}, text[i], attr);

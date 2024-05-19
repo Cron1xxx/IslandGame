@@ -8,10 +8,8 @@ using namespace std;
 
 
 int main() {
-
   CFrame frame = CFrame();
   frame.run();
-
 }
 
 

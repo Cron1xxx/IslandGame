@@ -23,6 +23,25 @@ private:
 			NEXT_VIEW_INFO action();
 		};
 
+		class CLoadGameMenuItem : public CAbstractMenuItem {
+		public:
+			CLoadGameMenuItem(CString caption, BOOL enable, CGame* game);
+			NEXT_VIEW_INFO action();
+		};
+
+		class CSaveGameMenuItem : public CAbstractMenuItem {
+		public:
+			CSaveGameMenuItem(CString caption, BOOL enable, CGame* game);
+			NEXT_VIEW_INFO action();
+		};
+
+		class CContinueGameMenuItem : public CAbstractMenuItem {
+		public:
+			CContinueGameMenuItem(CString caption, BOOL enable, CGame* game);
+			NEXT_VIEW_INFO action();
+		};
+
+
 		class CExitMenuItem : public CAbstractMenuItem {
 		public:
 			CExitMenuItem(CString caption, BOOL enable, CGame* game);

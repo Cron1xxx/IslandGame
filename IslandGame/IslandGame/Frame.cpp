@@ -33,6 +33,9 @@ void CFrame::run() {
 	
 	while (true) {
 		nextView = mpActiveView->show();
+		if (nextView.mViewType == EViewType::EXIT) {
+			exit(0);
+		}
 		setActiveView(nextView);
 	}
 	

@@ -42,3 +42,10 @@
 #define	B_LIGHTPURPLE	0xD0
 #define	B_LIGHTYELLOW	0xE0
 #define	B_BRIGTHWHITE	0xF0
+
+#define KEY_ENTER		0x0D
+#define KEY_ESCAPE		0x1B
+#define KEY_ARROW_LEFT	0x25
+#define KEY_ARROW_UP	0x26
+#define KEY_ARROW_RIGHT	0x27
+#define KEY_ARROW_DOWN	0x28

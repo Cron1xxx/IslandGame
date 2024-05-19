@@ -13,11 +13,9 @@ NEXT_VIEW_INFO CMenuView::show() {
 	
 	while (!mExit) {
 		render();
-		Sleep(500);
+		Sleep(100);
 	}
-	NEXT_VIEW_INFO nextViewInfo;
-	nextViewInfo.mViewType = EViewType::TEST_VIEW;
-	return nextViewInfo;
+	return mMenu->action();
 }
 
 void CMenuView::render(){
@@ -25,26 +23,44 @@ void CMenuView::render(){
 }
 
 void CMenuView::keypressed(WORD keyCode) {
-	if (keyCode == 69) {
+	if (keyCode == KEY_ARROW_UP) {
+		mMenu->scroll(EMenuScroll::UP);
+	}
+	if (keyCode == KEY_ARROW_DOWN) {
+		mMenu->scroll(EMenuScroll::DOWN);
+	}
+	if (keyCode == KEY_ENTER) {
 		mExit = true;
 	}
+	drawMenu();
 }
 
 void CMenuView::drawMenu() {
 	SHORT numItem = mMenu->mvMenuItems.size();
 	SHORT maxItemCaptionLength = mMenu->mMaxItemCaptionLength;
 
-	const SHORT boxHeight = 3;
+	const SHORT boxHeight = 2;
 	const SHORT boxWight = maxItemCaptionLength > 30 ? maxItemCaptionLength + 4 : 30;
 
 	const SHORT x = mpSize.cx / 2 - boxWight / 2;
 	const SHORT y = mpSize.cy / 2 - numItem * (boxHeight + 1) / 2;
 
-	for (SHORT i = 0; i < numItem; i++) {
-		mSurface->drawRect({x, y + i * (boxHeight + 1), x + boxWight, y + boxHeight + i * (boxHeight + 1) }, EFrameType::SINGLE, F_WHITE);
-	}
+	WORD attr;
+	auto currentPos = mMenu->mCurrentPosition;
 
-	
+	for (SHORT i = 0; i < numItem; i++) {
+		if (i == currentPos) {
+			attr = F_BLACK|B_WHITE;
+		} else {
+			if (mMenu->mvMenuItems[i]->mbEnable) {
+				attr = F_WHITE | B_BLACK;
+			} else {
+				attr = F_GREY | B_BLACK;
+			}
+		}
+		mSurface->drawRect({x, y + i * (boxHeight + 1), x + boxWight, y + boxHeight + i * (boxHeight + 1) }, 
+			EFrameType::SINGLE, attr, mMenu->mvMenuItems[i]->msCaption, EAlignment::CENTER);
+	}
 }
 
 CMenuView::CMenu::CAbstractMenuItem::CAbstractMenuItem(CString caption, BOOL enable, CGame* game) {
@@ -55,11 +71,11 @@ CMenuView::CMenu::CAbstractMenuItem::CAbstractMenuItem(CString caption, BOOL ena
 
 CMenuView::CMenu::CMenu(CGame* game) {
 	mvMenuItems.push_back(new CNewGameMenuItem("New Game", true, game));
+	mvMenuItems.push_back(new CLoadGameMenuItem("Load Game", true, game));
+	mvMenuItems.push_back(new CSaveGameMenuItem("Save Game", false, game));
+	mvMenuItems.push_back(new CContinueGameMenuItem("Continue Game", false, game));
 	mvMenuItems.push_back(new CExitMenuItem("Exit", true, game));
-	mvMenuItems.push_back(new CExitMenuItem("Exit", true, game));
-	mvMenuItems.push_back(new CExitMenuItem("Exit", true, game));
-	mvMenuItems.push_back(new CExitMenuItem("Exit", true, game));
-	mvMenuItems.push_back(new CExitMenuItem("Exit", true, game));
+	setCurrentPosition(0);
 
 }
 
@@ -103,7 +119,6 @@ void CMenuView::CMenu::setCurrentPosition(SHORT ind) {
 	mCurrentPosition = ind;
 }
 
-
 CMenuView::CMenu::CNewGameMenuItem::CNewGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
 
 NEXT_VIEW_INFO CMenuView::CMenu::CNewGameMenuItem::action() {
@@ -111,7 +126,7 @@ NEXT_VIEW_INFO CMenuView::CMenu::CNewGameMenuItem::action() {
 		delete mpGame;
 	}
 	mpGame = new CGame();
-
+	//TODO: next view game scene view
 	return NEXT_VIEW_INFO();
 }
 
@@ -119,4 +134,25 @@ CMenuView::CMenu::CExitMenuItem::CExitMenuItem(CString caption, BOOL enable, CGa
 
 NEXT_VIEW_INFO CMenuView::CMenu::CExitMenuItem::action() {
 	return {EViewType::EXIT};
+}
+
+CMenuView::CMenu::CLoadGameMenuItem::CLoadGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
+
+//TODO:
+NEXT_VIEW_INFO CMenuView::CMenu::CLoadGameMenuItem::action() {
+	return NEXT_VIEW_INFO();
+}
+
+CMenuView::CMenu::CSaveGameMenuItem::CSaveGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
+
+//TODO:
+NEXT_VIEW_INFO CMenuView::CMenu::CSaveGameMenuItem::action() {
+	return NEXT_VIEW_INFO();
+}
+
+CMenuView::CMenu::CContinueGameMenuItem::CContinueGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
+
+//TODO:
+NEXT_VIEW_INFO CMenuView::CMenu::CContinueGameMenuItem::action() {
+	return NEXT_VIEW_INFO();
 }
