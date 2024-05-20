@@ -4,8 +4,11 @@
 CMenuView::CMenuView(CGame* game, SIZE size, HANDLE hConsoleOutput) : CAbstractView(game, size, hConsoleOutput){
 	msCaption = "Main Menu";
 	drawCaption();
+	msBottomString = "?-";
+	drawBottomString();
 	mMenu = new CMenu(game);
 	drawMenu();
+
 }
 
 NEXT_VIEW_INFO CMenuView::show() {
@@ -50,7 +53,7 @@ void CMenuView::drawMenu() {
 
 	for (SHORT i = 0; i < numItem; i++) {
 		if (i == currentPos) {
-			attr = F_BLACK|B_WHITE;
+			attr = F_BLACK | B_WHITE;
 		} else {
 			if (mMenu->mvMenuItems[i]->mbEnable) {
 				attr = F_WHITE | B_BLACK;
@@ -72,8 +75,8 @@ CMenuView::CMenu::CAbstractMenuItem::CAbstractMenuItem(CString caption, BOOL ena
 CMenuView::CMenu::CMenu(CGame* game) {
 	mvMenuItems.push_back(new CNewGameMenuItem("New Game", true, game));
 	mvMenuItems.push_back(new CLoadGameMenuItem("Load Game", true, game));
-	mvMenuItems.push_back(new CSaveGameMenuItem("Save Game", false, game));
-	mvMenuItems.push_back(new CContinueGameMenuItem("Continue Game", false, game));
+	mvMenuItems.push_back(new CSaveGameMenuItem("Save Game", true, game));
+	mvMenuItems.push_back(new CContinueGameMenuItem("Continue Game", true, game));
 	mvMenuItems.push_back(new CExitMenuItem("Exit", true, game));
 	setCurrentPosition(0);
 
@@ -139,19 +142,29 @@ CMenuView::CMenu::CLoadGameMenuItem::CLoadGameMenuItem(CString caption, BOOL ena
 
 //TODO:
 NEXT_VIEW_INFO CMenuView::CMenu::CLoadGameMenuItem::action() {
-	return NEXT_VIEW_INFO();
+	if (mpGame != nullptr) {
+		delete mpGame;
+	}
+	//TODO
+	mpGame = new CGame();
+	return {EViewType::MENU_VIEW};
 }
 
 CMenuView::CMenu::CSaveGameMenuItem::CSaveGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
 
-//TODO:
 NEXT_VIEW_INFO CMenuView::CMenu::CSaveGameMenuItem::action() {
-	return NEXT_VIEW_INFO();
+	if (mpGame != nullptr) {
+		//TODO
+	}
+	return { EViewType::MENU_VIEW };
 }
 
 CMenuView::CMenu::CContinueGameMenuItem::CContinueGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
 
-//TODO:
 NEXT_VIEW_INFO CMenuView::CMenu::CContinueGameMenuItem::action() {
-	return NEXT_VIEW_INFO();
+	if (mpGame != nullptr) {
+		delete mpGame;
+	}
+	mpGame = new CGame();    
+	return { EViewType::SCENE_VIEW };
 }

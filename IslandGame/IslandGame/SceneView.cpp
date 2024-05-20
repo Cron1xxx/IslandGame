@@ -3,6 +3,8 @@
 CSceneView::CSceneView(CGame* game, SIZE size, HANDLE hConsoleOutput) : CAbstractView(game, size, hConsoleOutput) {
 	msCaption = "Scene";
 	drawCaption();
+	msBottomString = "";
+	drawBottomString();
 	mSurface->drawRect({1, 5, mpSize.cx - 2, mpSize.cy - 3}, EFrameType::SINGLE, F_WHITE);
 }
 

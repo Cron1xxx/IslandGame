@@ -19,9 +19,11 @@ protected:
 	SIZE mpSize;
 	CSurface* mSurface;
 	CString msCaption = "";
+	CString msBottomString = "";
 	HANDLE mhConsoleOutput;
 
 	void drawCaption();
+	void drawBottomString();
 	void ShowCursor(BOOL visible);
 	void SetCursorPosition(COORD pos);
 };

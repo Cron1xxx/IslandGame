@@ -8,7 +8,7 @@
 #define WINDOW_WIGHT 100
 #endif
 
-// Colors
+// Font Colors
 #define F_BLACK			0x00
 #define	F_BLUE			0x01
 #define	F_GREEN 		0x02
@@ -26,6 +26,7 @@
 #define	F_LIGHTYELLOW	0x0E
 #define	F_BRIGTHWHITE	0x0F
 
+// Background colors
 #define B_BLACK			0x00
 #define	B_BLUE			0x10
 #define	B_GREEN 		0x20

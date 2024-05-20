@@ -19,6 +19,20 @@ void CAbstractView::drawCaption() {
 	mSurface->drawText({3, 0}, " " + msCaption + " ", F_WHITE);
 }
 
+void CAbstractView::drawBottomString() {
+	CString text = msBottomString;
+	SHORT maxTextLen = mpSize.cx - 4;
+	if (msBottomString.GetLength() >= maxTextLen) {
+		text = text.Left(maxTextLen);
+	} else {
+		for (int i = 0; i < maxTextLen - msBottomString.GetLength(); i++) {
+			text += " ";
+		}
+	}
+	
+	mSurface->drawText({1, (SHORT)(mpSize.cy - 2)}, " " + text + " ", F_BLACK | B_WHITE);
+}
+
 void CAbstractView::ShowCursor(BOOL visible) {
 	CONSOLE_CURSOR_INFO cursorInfo;
 	GetConsoleCursorInfo(mhConsoleOutput, &cursorInfo);
