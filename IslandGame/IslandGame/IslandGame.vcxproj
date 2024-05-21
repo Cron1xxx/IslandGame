@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AbstractView.cpp" />
-    <ClCompile Include="CTestView.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IslandGame.cpp" />
@@ -140,9 +139,9 @@
   <ItemGroup>
     <ClInclude Include="AbstractView.h" />
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="CTestView.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Scene_1.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="MenuView.h" />
@@ -150,6 +149,9 @@
     <ClInclude Include="Structures.h" />
     <ClInclude Include="Surface.h" />
     <ClInclude Include="View.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -21,7 +21,6 @@ private:
 	CAbstractView* mpActiveView;
 	
 	CAbstractView* mpMenuView;
-	CAbstractView* mpTestView;
 	CAbstractView* mpSceneView;
 
 	CKeyboardHandler* mpKeyboardHandler;

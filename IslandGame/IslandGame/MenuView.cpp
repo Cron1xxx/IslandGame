@@ -4,7 +4,7 @@
 CMenuView::CMenuView(CGame* game, SIZE size, HANDLE hConsoleOutput) : CAbstractView(game, size, hConsoleOutput){
 	msCaption = "Main Menu";
 	drawCaption();
-	msBottomString = "?-";
+	msBottomString = formBottomString();
 	drawBottomString();
 	mMenu = new CMenu(game);
 	drawMenu();
@@ -36,6 +36,15 @@ void CMenuView::keypressed(WORD keyCode) {
 		mExit = true;
 	}
 	drawMenu();
+}
+
+CString CMenuView::formBottomString() {
+	CString str = "";
+	str.AppendChar((char)24);
+	str = str + " - Up, ";
+	str.AppendChar((char)25);
+	str = str + " - Down, ENTER - Select";
+	return str;
 }
 
 void CMenuView::drawMenu() {
@@ -163,8 +172,8 @@ CMenuView::CMenu::CContinueGameMenuItem::CContinueGameMenuItem(CString caption, 
 
 NEXT_VIEW_INFO CMenuView::CMenu::CContinueGameMenuItem::action() {
 	if (mpGame != nullptr) {
-		delete mpGame;
+		return { EViewType::SCENE_VIEW };
+	} else {
+		return { EViewType::MENU_VIEW };
 	}
-	mpGame = new CGame();    
-	return { EViewType::SCENE_VIEW };
 }

@@ -70,5 +70,6 @@ private:
 	bool mExit;
 	void drawMenu();
 	void render();
+	CString formBottomString();
 };
 

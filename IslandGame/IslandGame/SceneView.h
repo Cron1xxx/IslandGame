@@ -6,5 +6,7 @@ public:
 	CSceneView(CGame* game, SIZE size, HANDLE hConsoleOutput);
 	NEXT_VIEW_INFO show();
 	void keypressed(WORD keyCode);
+private:
+	CString formBottomString();
 };
 
