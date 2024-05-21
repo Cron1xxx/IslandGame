@@ -5,16 +5,26 @@
 #include <windows.h>
 #include "CTestView.h"
 #include "MenuView.h"
-
+#include "SceneView.h"
+#include <strsafe.h>
+#include "Constants.h"
 
 
 CFrame::CFrame() {
 	SIZE size;
-	size.cx = 120;
-	size.cy = 40;
+	size.cx = WINDOW_WIGHT;
+	size.cy = WINDOW_HEIGHT;
+	TCHAR szNewTitle[MAX_PATH];
+	StringCchPrintf(szNewTitle, MAX_PATH, TEXT("Island Game"));
+	SetConsoleTitle(szNewTitle);
+	HANDLE hConsoleOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleScreenBufferSize(hConsoleOutput, {(SHORT)size.cx, (SHORT)size.cy});
+	SMALL_RECT rect = {0, 0, size.cx, size.cy};
+	SetConsoleWindowInfo(hConsoleOutput, TRUE, &rect);
 	mpKeyboardHandler = new CKeyboardHandler();
-	mpMenuView = new CMenuView(mpGame, size);
-	mpTestView = new CTestView(mpGame, size);
+	mpMenuView = new CMenuView(mpGame, size, hConsoleOutput);
+	mpTestView = new CTestView(mpGame, size, hConsoleOutput);
+	mpSceneView = new CSceneView(mpGame, size, hConsoleOutput);
 }
 
 void CFrame::run() {
@@ -25,8 +35,12 @@ void CFrame::run() {
 	
 	while (true) {
 		nextView = mpActiveView->show();
+		if (nextView.mViewType == EViewType::EXIT) {
+			exit(0);
+		}
 		setActiveView(nextView);
 	}
+	
 }
 
 
@@ -35,9 +49,9 @@ void CFrame::setActiveView(NEXT_VIEW_INFO nextViewInfo) {
 		mpKeyboardHandler->setListener(mpMenuView);
 		mpActiveView = mpMenuView;
 		
-	} else if (nextViewInfo.mViewType == EViewType::TEST_VIEW) {
-		mpKeyboardHandler->setListener(mpTestView);
-		mpActiveView = mpTestView;
+	} else if (nextViewInfo.mViewType == EViewType::SCENE_VIEW) {
+		mpKeyboardHandler->setListener(mpSceneView);
+		mpActiveView = mpSceneView;
 	};
 }
 

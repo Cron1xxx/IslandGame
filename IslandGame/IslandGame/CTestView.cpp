@@ -4,7 +4,7 @@
 
 using namespace std;
 
-CTestView::CTestView(CGame* game, SIZE size) : CAbstractView(game, size) {
+CTestView::CTestView(CGame* game, SIZE size, HANDLE hConsoleOutput) : CAbstractView(game, size, hConsoleOutput) {
 	
 }
 
@@ -19,7 +19,6 @@ NEXT_VIEW_INFO CTestView::show() {
 }
 
 void CTestView::keypressed(WORD keyCode) {
-	printf("TestView key %d pressed\n", keyCode);
 	if (keyCode == 69) {
 		mExit = true;
 	}

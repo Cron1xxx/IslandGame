@@ -43,7 +43,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -134,16 +134,19 @@
     <ClCompile Include="IslandGame.cpp" />
     <ClCompile Include="KeyboardHandler.cpp" />
     <ClCompile Include="MenuView.cpp" />
+    <ClCompile Include="SceneView.cpp" />
     <ClCompile Include="Surface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractView.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="CTestView.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="MenuView.h" />
+    <ClInclude Include="SceneView.h" />
     <ClInclude Include="Structures.h" />
     <ClInclude Include="Surface.h" />
     <ClInclude Include="View.h" />
