@@ -1,7 +1,7 @@
 #include "AbstractView.h"
 #include <cstdio>
 
-CAbstractView::CAbstractView(CGame* game, SIZE size, HANDLE hConsoleOutput) {
+CAbstractView::CAbstractView(CGame** game, SIZE size, HANDLE hConsoleOutput) {
 	mpGame = game;
 	mpSize = size;
 	mhConsoleOutput = hConsoleOutput;
@@ -41,6 +41,6 @@ void CAbstractView::ShowCursor(BOOL visible) {
 }
 
 void CAbstractView::SetCursorPosition(COORD pos) {
-	SetConsoleCursorPosition(mhConsoleOutput, {pos.X, pos.Y});
+	SetConsoleCursorPosition(mhConsoleOutput, pos);
 }
 
