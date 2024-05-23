@@ -9,49 +9,50 @@ private:
 	public:
 		class CAbstractMenuItem {
 		public:
-			CAbstractMenuItem(CString caption, BOOL enable, CGame* game);
+			CAbstractMenuItem(CString caption, BOOL enable, CGame** game);
 			CString msCaption;
 			BOOL mbEnable;
-			CGame* mpGame;
+			CGame** mpGame;
 
 			virtual NEXT_VIEW_INFO action() = 0;
 		};
 
 		class CNewGameMenuItem : public CAbstractMenuItem {
 		public:
-			CNewGameMenuItem(CString caption, BOOL enable, CGame* game);
+			CNewGameMenuItem(CString caption, BOOL enable, CGame** game);
 			NEXT_VIEW_INFO action();
 		};
 
 		class CLoadGameMenuItem : public CAbstractMenuItem {
 		public:
-			CLoadGameMenuItem(CString caption, BOOL enable, CGame* game);
+			CLoadGameMenuItem(CString caption, BOOL enable, CGame** game);
 			NEXT_VIEW_INFO action();
 		};
 
 		class CSaveGameMenuItem : public CAbstractMenuItem {
 		public:
-			CSaveGameMenuItem(CString caption, BOOL enable, CGame* game);
+			CSaveGameMenuItem(CString caption, BOOL enable, CGame** game);
 			NEXT_VIEW_INFO action();
 		};
 
 		class CContinueGameMenuItem : public CAbstractMenuItem {
 		public:
-			CContinueGameMenuItem(CString caption, BOOL enable, CGame* game);
+			CContinueGameMenuItem(CString caption, BOOL enable, CGame** game);
 			NEXT_VIEW_INFO action();
 		};
 
 
 		class CExitMenuItem : public CAbstractMenuItem {
 		public:
-			CExitMenuItem(CString caption, BOOL enable, CGame* game);
+			CExitMenuItem(CString caption, BOOL enable, CGame** game);
 			NEXT_VIEW_INFO action();
 		};
 		
-		CMenu(CGame* game);
+		CMenu(CGame** game);
 		vector<CAbstractMenuItem*> mvMenuItems;
 		SHORT mCurrentPosition;
 		SHORT mMaxItemCaptionLength = 0;
+		//scroll menu UP or DOWN
 		void scroll(EMenuScroll direction);
 		NEXT_VIEW_INFO action();
 
@@ -61,7 +62,7 @@ private:
 		void setCurrentPosition(SHORT ind);
 	};
 public:
-	CMenuView(CGame* game, SIZE size, HANDLE hConsoleOutput);
+	CMenuView(CGame** game, SIZE size, HANDLE hConsoleOutput);
 	NEXT_VIEW_INFO show();
 	void keypressed(WORD keyCode);
 
@@ -70,5 +71,6 @@ private:
 	bool mExit;
 	void drawMenu();
 	void render();
+	CString formBottomString();
 };
 

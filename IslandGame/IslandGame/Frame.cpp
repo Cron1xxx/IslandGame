@@ -3,7 +3,6 @@
 #include "Frame.h"
 #include <thread>
 #include <windows.h>
-#include "CTestView.h"
 #include "MenuView.h"
 #include "SceneView.h"
 #include <strsafe.h>
@@ -22,9 +21,8 @@ CFrame::CFrame() {
 	SMALL_RECT rect = {0, 0, size.cx, size.cy};
 	SetConsoleWindowInfo(hConsoleOutput, TRUE, &rect);
 	mpKeyboardHandler = new CKeyboardHandler();
-	mpMenuView = new CMenuView(mpGame, size, hConsoleOutput);
-	mpTestView = new CTestView(mpGame, size, hConsoleOutput);
-	mpSceneView = new CSceneView(mpGame, size, hConsoleOutput);
+	mpMenuView = new CMenuView(&mpGame, size, hConsoleOutput);
+	mpSceneView = new CSceneView(&mpGame, size, hConsoleOutput);
 }
 
 void CFrame::run() {

@@ -1,10 +1,10 @@
 #include "MenuView.h"
 #include <cstdio>
 
-CMenuView::CMenuView(CGame* game, SIZE size, HANDLE hConsoleOutput) : CAbstractView(game, size, hConsoleOutput){
+CMenuView::CMenuView(CGame** game, SIZE size, HANDLE hConsoleOutput) : CAbstractView(game, size, hConsoleOutput){
 	msCaption = "Main Menu";
 	drawCaption();
-	msBottomString = "?-";
+	msBottomString = formBottomString();
 	drawBottomString();
 	mMenu = new CMenu(game);
 	drawMenu();
@@ -38,6 +38,15 @@ void CMenuView::keypressed(WORD keyCode) {
 	drawMenu();
 }
 
+CString CMenuView::formBottomString() {
+	CString str = "";
+	str.AppendChar((char)24);
+	str = str + " - Up, ";
+	str.AppendChar((char)25);
+	str = str + " - Down, ENTER - Select";
+	return str;
+}
+
 void CMenuView::drawMenu() {
 	SHORT numItem = mMenu->mvMenuItems.size();
 	SHORT maxItemCaptionLength = mMenu->mMaxItemCaptionLength;
@@ -66,13 +75,13 @@ void CMenuView::drawMenu() {
 	}
 }
 
-CMenuView::CMenu::CAbstractMenuItem::CAbstractMenuItem(CString caption, BOOL enable, CGame* game) {
+CMenuView::CMenu::CAbstractMenuItem::CAbstractMenuItem(CString caption, BOOL enable, CGame** game) {
 	msCaption = caption;
 	mbEnable = enable;
 	mpGame = game;
 }
 
-CMenuView::CMenu::CMenu(CGame* game) {
+CMenuView::CMenu::CMenu(CGame** game) {
 	mvMenuItems.push_back(new CNewGameMenuItem("New Game", true, game));
 	mvMenuItems.push_back(new CLoadGameMenuItem("Load Game", true, game));
 	mvMenuItems.push_back(new CSaveGameMenuItem("Save Game", true, game));
@@ -122,49 +131,49 @@ void CMenuView::CMenu::setCurrentPosition(SHORT ind) {
 	mCurrentPosition = ind;
 }
 
-CMenuView::CMenu::CNewGameMenuItem::CNewGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
+CMenuView::CMenu::CNewGameMenuItem::CNewGameMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
 NEXT_VIEW_INFO CMenuView::CMenu::CNewGameMenuItem::action() {
-	if (mpGame != nullptr) {
-		delete mpGame;
+	if (*mpGame != nullptr) {
+		delete *mpGame;
 	}
-	mpGame = new CGame();
+	*mpGame = new CGame();
 	return {EViewType::SCENE_VIEW};
 }
 
-CMenuView::CMenu::CExitMenuItem::CExitMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
+CMenuView::CMenu::CExitMenuItem::CExitMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
 NEXT_VIEW_INFO CMenuView::CMenu::CExitMenuItem::action() {
 	return {EViewType::EXIT};
 }
 
-CMenuView::CMenu::CLoadGameMenuItem::CLoadGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
+CMenuView::CMenu::CLoadGameMenuItem::CLoadGameMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
 //TODO:
 NEXT_VIEW_INFO CMenuView::CMenu::CLoadGameMenuItem::action() {
-	if (mpGame != nullptr) {
-		delete mpGame;
+	if (*mpGame != nullptr) {
+		delete *mpGame;
 	}
 	//TODO
-	mpGame = new CGame();
+	*mpGame = new CGame();
 	return {EViewType::MENU_VIEW};
 }
 
-CMenuView::CMenu::CSaveGameMenuItem::CSaveGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
+CMenuView::CMenu::CSaveGameMenuItem::CSaveGameMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
 NEXT_VIEW_INFO CMenuView::CMenu::CSaveGameMenuItem::action() {
-	if (mpGame != nullptr) {
+	if (*mpGame != nullptr) {
 		//TODO
 	}
 	return { EViewType::MENU_VIEW };
 }
 
-CMenuView::CMenu::CContinueGameMenuItem::CContinueGameMenuItem(CString caption, BOOL enable, CGame* game) : CAbstractMenuItem(caption, enable, game) {}
+CMenuView::CMenu::CContinueGameMenuItem::CContinueGameMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
 NEXT_VIEW_INFO CMenuView::CMenu::CContinueGameMenuItem::action() {
-	if (mpGame != nullptr) {
-		delete mpGame;
+	if (*mpGame != nullptr) {
+		return { EViewType::SCENE_VIEW };
+	} else {
+		return { EViewType::MENU_VIEW };
 	}
-	mpGame = new CGame();    
-	return { EViewType::SCENE_VIEW };
 }
