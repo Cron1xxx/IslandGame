@@ -19,6 +19,7 @@ public:
 		CString msLeftSceneName;
 		CString msUpSceneName;
 		CString msDownSceneName;
+		static LOCATION_INFO convertToLocationInfo (WORD word);
 	};
 	COORD mPosCharacter;
 	CScene* mpCurrentScene;

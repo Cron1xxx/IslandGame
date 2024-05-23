@@ -96,4 +96,4 @@
 #define S_ROAD 0x02
 #define S_SAND 0x03
 #define S_FOREST 0x04
-#define S_ACTIVITY 0x05
+#define S_ACTIVITY 0x0A

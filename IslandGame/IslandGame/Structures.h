@@ -11,6 +11,8 @@ enum class EDirection{UP, DOWN, LEFT, RIGHT};
 struct LOCATION_INFO {
 	SHORT sObject;
 	SHORT sAttr;
+	bool  bObstacle; 
+	SHORT sPenalty;
 };
 
 struct NEXT_VIEW_INFO {

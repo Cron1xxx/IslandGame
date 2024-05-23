@@ -146,6 +146,9 @@
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="MenuView.h" />
     <ClInclude Include="SceneView.h" />
+    <ClInclude Include="Scene_2.h" />
+    <ClInclude Include="Scene_3.h" />
+    <ClInclude Include="Scene_4.h" />
     <ClInclude Include="Structures.h" />
     <ClInclude Include="Surface.h" />
     <ClInclude Include="View.h" />

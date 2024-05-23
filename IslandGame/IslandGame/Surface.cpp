@@ -99,3 +99,10 @@ void CSurface::drawChar(COORD pos, CHAR ch, WORD attr) {
 		mBuffer[pos.Y][pos.X].Attributes = attr;
 	}
 }
+
+void CSurface::drawTransparentChar(COORD pos, CHAR ch, SHORT color) {
+	if (pos.X >= 0 && pos.X < mSize.cx && pos.Y >= 0 && pos.Y < mSize.cy) {
+		SHORT backgroundColor = mBuffer[pos.Y][pos.X].Attributes & 0xF0;
+		drawChar(pos, ch, color | backgroundColor);
+	}
+}

@@ -15,6 +15,7 @@ public:
 	void drawRect(_RECTL rect, EFrameType frameType, WORD attr, CString text, EAlignment horizontalAlignment);
 	void drawText(COORD pos, CString text, WORD attr);
 	void drawChar(COORD pos, CHAR ch, WORD attr);
+	void drawTransparentChar(COORD pos, CHAR ch, SHORT color);
 private:
 	SIZE mSize;
 	CHAR_INFO mBuffer[WINDOW_HEIGHT][WINDOW_WIGHT];
