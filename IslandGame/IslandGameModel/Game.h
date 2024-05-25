@@ -1,9 +1,10 @@
 #pragma once
+#pragma once
 #include <Windows.h>
 #include <atlstr.h>
-#include "Constants.h"
+#include "GameConstants.h"
 #include <map>
-#include "Structures.h"
+#include "GameStructures.h"
 
 
 using namespace std;
@@ -19,7 +20,7 @@ public:
 		CString msLeftSceneName;
 		CString msUpSceneName;
 		CString msDownSceneName;
-		static LOCATION_INFO convertToLocationInfo (WORD word);
+		static LOCATION_INFO convertToLocationInfo(WORD word);
 	};
 	COORD mPosCharacter;
 	CScene* mpCurrentScene;

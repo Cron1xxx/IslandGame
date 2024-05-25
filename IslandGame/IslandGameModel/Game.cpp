@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Game.h"
 #include "Scene_1.h"
 #include "Scene_2.h"
@@ -16,13 +17,12 @@ CGame::CGame() {
 }
 
 CGame::CScene::CScene(
-	CString name, 
-	WORD* field, 
-	CString rightSceneName, 
-	CString leftSceneName, 
-	CString upSceneName, 
-	CString downSceneName) 
-{
+	CString name,
+	WORD* field,
+	CString rightSceneName,
+	CString leftSceneName,
+	CString upSceneName,
+	CString downSceneName) {
 	msName = name;
 	msRightSceneName = rightSceneName;
 	msLeftSceneName = leftSceneName;
@@ -45,7 +45,7 @@ LOCATION_INFO CGame::CScene::convertToLocationInfo(WORD word) {
 	SHORT attr = word & 0xFF;
 	SHORT penalty = 0;
 	bool obstacle = false;
-	
+
 	if (object == S_WATER || object == S_ACTIVITY) {
 		obstacle = true;
 	}
@@ -66,7 +66,7 @@ LOCATION_INFO CGame::CScene::convertToLocationInfo(WORD word) {
 		penalty = 4;
 	}
 
-	return {object, attr, obstacle, penalty};
+	return { object, attr, obstacle, penalty };
 }
 
 
@@ -88,21 +88,22 @@ void CGame::moveCharacter(EDirection direction) {
 	if (nextPos.Y < 0) {
 		mpCurrentScene = mScenes.at(mpCurrentScene->msUpSceneName);
 		nextPos.Y = FIELD_HEIGHT - 1;
-	// TO DOWN
+		// TO DOWN
 	} else if (nextPos.Y >= FIELD_HEIGHT) {
 		mpCurrentScene = mScenes.at(mpCurrentScene->msDownSceneName);
 		nextPos.Y = 0;
-	// TO RIGHT
+		// TO RIGHT
 	} else if (nextPos.X >= FIELD_WIGHT) {
 		mpCurrentScene = mScenes.at(mpCurrentScene->msRightSceneName);
 		nextPos.X = 0;
-	// TO LEFT
+		// TO LEFT
 	} else if (nextPos.X < 0) {
 		mpCurrentScene = mScenes.at(mpCurrentScene->msLeftSceneName);
 		nextPos.X = FIELD_WIGHT - 1;
-	// OBSTACLE
+		// OBSTACLE
 	} else if (mpCurrentScene->mField[nextPos.Y][nextPos.X].bObstacle) {
 		nextPos = mPosCharacter;
 	}
 	mPosCharacter = nextPos;
 }
+

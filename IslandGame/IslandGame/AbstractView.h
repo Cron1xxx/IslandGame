@@ -1,7 +1,7 @@
 #pragma once
 #include "View.h"
 #include "KeyboardListener.h"
-#include "Game.h"
+#include "../IslandGameModel/Game.h"
 #include "Structures.h"
 #include "Surface.h"
 #include <atlstr.h>

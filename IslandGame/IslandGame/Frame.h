@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game.h"
+#include "../IslandGameModel/Game.h"
 #include "KeyboardHandler.h"
 #include "AbstractView.h"
 #include <thread>
