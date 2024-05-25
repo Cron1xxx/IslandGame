@@ -9,3 +9,7 @@
 #define S_SAND 0x03
 #define S_FOREST 0x04
 #define S_ACTIVITY 0x0A
+
+
+#define CHARACTER_HEALTH_DEFAULT 100
+#define CHARACTER_COINS_DEFAULT 0

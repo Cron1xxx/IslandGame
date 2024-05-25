@@ -69,8 +69,6 @@ LOCATION_INFO CGame::CScene::convertToLocationInfo(WORD word) {
 	return { object, attr, obstacle, penalty };
 }
 
-
-
 void CGame::moveCharacter(EDirection direction) {
 	COORD nextPos = mPosCharacter;
 
@@ -104,6 +102,11 @@ void CGame::moveCharacter(EDirection direction) {
 	} else if (mpCurrentScene->mField[nextPos.Y][nextPos.X].bObstacle) {
 		nextPos = mPosCharacter;
 	}
+
+	if (nextPos.X != mPosCharacter.X || nextPos.Y != mPosCharacter.Y) {
+		mCharacter.health -= mpCurrentScene->mField[nextPos.Y][nextPos.X].sPenalty;
+	}
+
 	mPosCharacter = nextPos;
 }
 

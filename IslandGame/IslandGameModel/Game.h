@@ -22,8 +22,14 @@ public:
 		CString msDownSceneName;
 		static LOCATION_INFO convertToLocationInfo(WORD word);
 	};
+	class CCharacter {
+	public:
+		SHORT health = CHARACTER_HEALTH_DEFAULT;
+		SHORT coins = CHARACTER_COINS_DEFAULT;
+	};
 	COORD mPosCharacter;
 	CScene* mpCurrentScene;
+	CCharacter mCharacter;
 	map<CString, CScene*> mScenes;
 	CGame();
 	void moveCharacter(EDirection direction);

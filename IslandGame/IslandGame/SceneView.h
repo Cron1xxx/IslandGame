@@ -11,6 +11,8 @@ private:
 	CString formBottomString();
 	void renderField();
 	void renderCharacter();
+	void renderCharacterInfo();
+	void renderCharacterInfoFrame();
 
 };
 

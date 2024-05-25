@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClCompile Include="AbstractView.cpp" />
     <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="IntroView.cpp" />
     <ClCompile Include="IslandGame.cpp" />
     <ClCompile Include="KeyboardHandler.cpp" />
     <ClCompile Include="MenuView.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="AbstractView.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Frame.h" />
+    <ClInclude Include="IntroView.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="MenuView.h" />

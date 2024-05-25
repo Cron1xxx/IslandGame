@@ -20,13 +20,10 @@ private:
 	CGame* mpGame;
 	CAbstractView* mpActiveView;
 	
-	CAbstractView* mpMenuView;
-	CAbstractView* mpSceneView;
+	map<EViewType, CAbstractView*> mViews;
 
 	CKeyboardHandler* mpKeyboardHandler;
 	thread* mKeyboardHandlingThread;
 	void setActiveView(NEXT_VIEW_INFO nextViewInfo);
-	//map<string, unique_ptr<CAbstractView>> *mViewMap;
-	
 };
 

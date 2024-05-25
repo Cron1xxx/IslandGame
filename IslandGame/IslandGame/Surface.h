@@ -13,6 +13,7 @@ public:
 	void fill(CHAR ch, WORD attr);
 	void drawRect(_RECTL rect, EFrameType frameType, WORD attr);
 	void drawRect(_RECTL rect, EFrameType frameType, WORD attr, CString text, EAlignment horizontalAlignment);
+	void drawRectWithCaption(_RECTL rect, EFrameType frameType, WORD attr, CString caption);
 	void drawText(COORD pos, CString text, WORD attr);
 	void drawChar(COORD pos, CHAR ch, WORD attr);
 	void drawTransparentChar(COORD pos, CHAR ch, SHORT color);

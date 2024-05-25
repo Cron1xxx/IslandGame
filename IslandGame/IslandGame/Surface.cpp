@@ -87,6 +87,11 @@ void CSurface::drawRect(_RECTL rect, EFrameType frameType, WORD attr, CString te
 
 }
 
+void CSurface::drawRectWithCaption(_RECTL rect, EFrameType frameType, WORD attr, CString caption) {
+	drawRect(rect, frameType, attr);
+	drawText({SHORT(rect.left + 2), SHORT(rect.top)}, caption, attr);
+}
+
 void CSurface::drawText(COORD pos, CString text, WORD attr) {
 	for (SHORT i = 0; i < text.GetLength(); i++) {
 		drawChar({(SHORT)(pos.X + i), pos.Y}, text[i], attr);

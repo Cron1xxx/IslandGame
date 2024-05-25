@@ -5,6 +5,7 @@
 #include <windows.h>
 #include "MenuView.h"
 #include "SceneView.h"
+#include "IntroView.h"
 #include <strsafe.h>
 #include "Constants.h"
 
@@ -21,8 +22,11 @@ CFrame::CFrame() {
 	SMALL_RECT rect = {0, 0, size.cx, size.cy};
 	SetConsoleWindowInfo(hConsoleOutput, TRUE, &rect);
 	mpKeyboardHandler = new CKeyboardHandler();
-	mpMenuView = new CMenuView(&mpGame, size, hConsoleOutput);
-	mpSceneView = new CSceneView(&mpGame, size, hConsoleOutput);
+	
+	//create views
+	mViews.insert(std::make_pair(EViewType::MENU_VIEW, new CMenuView(&mpGame, size, hConsoleOutput)));
+	mViews.insert(std::make_pair(EViewType::SCENE_VIEW, new CSceneView(&mpGame, size, hConsoleOutput)));
+	mViews.insert(std::make_pair(EViewType::INTRO_VIEW, new CIntroView(&mpGame, size, hConsoleOutput)));
 }
 
 void CFrame::run() {
@@ -43,14 +47,9 @@ void CFrame::run() {
 
 
 void CFrame::setActiveView(NEXT_VIEW_INFO nextViewInfo) {
-	if (nextViewInfo.mViewType == EViewType::MENU_VIEW) {
-		mpKeyboardHandler->setListener(mpMenuView);
-		mpActiveView = mpMenuView;
-		
-	} else if (nextViewInfo.mViewType == EViewType::SCENE_VIEW) {
-		mpKeyboardHandler->setListener(mpSceneView);
-		mpActiveView = mpSceneView;
-	};
+	auto view = mViews.at(nextViewInfo.mViewType);
+	mpKeyboardHandler->setListener(view);
+	mpActiveView = view;
 }
 
 CFrame::~CFrame() {
