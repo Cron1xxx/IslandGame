@@ -11,9 +11,9 @@ CGame::CGame() {
 	mScenes.insert(std::make_pair("S2", new CScene("S2", *field_2, "", "S1", "", "S4")));
 	mScenes.insert(std::make_pair("S3", new CScene("S3", *field_3, "S4", "", "S1", "")));
 	mScenes.insert(std::make_pair("S4", new CScene("S4", *field_4, "", "S3", "S2", "")));
-	mpCurrentScene = mScenes.at("S1");
-	mPosCharacter.X = 93;
-	mPosCharacter.Y = 29;
+	mpCurrentScene = mScenes.at("S3");
+	mPosCharacter.X = 50;
+	mPosCharacter.Y = 25;
 }
 
 CGame::CScene::CScene(
@@ -31,7 +31,6 @@ CGame::CScene::CScene(
 
 	WORD point;
 
-	// copy passed by pointer 2D array to class member array mField
 	for (int y = 0; y < FIELD_HEIGHT; y++) {
 		for (int x = 0; x < FIELD_WIGHT; x++) {
 			point = *((field + y * FIELD_WIGHT) + x);

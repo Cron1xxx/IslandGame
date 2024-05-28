@@ -76,11 +76,11 @@ void CSceneView::renderField() {
 				ch = ' ';
 				color = B_GREY;
 			} else  if (field[y][x].sObject == S_SAND) {
-				ch = ' ';
-				color = B_LIGHTYELLOW;
+				ch = char(177);
+				color = F_YELLOW|B_LIGHTYELLOW;
 			} else  if (field[y][x].sObject == S_FOREST) {
-				ch = ' ';
-				color = B_GREEN;
+				ch = char(23);
+				color = F_BLACK|B_GREEN;
 			} else  if (field[y][x].sObject == S_ACTIVITY) {
 				ch = 'A';
 				color = F_WHITE|B_RED;
@@ -96,7 +96,7 @@ void CSceneView::renderCharacter() {
 	COORD cord = (*mpGame)->mPosCharacter;
 	cord.X += 2;
 	cord.Y +=6;
-	mSurface->drawTransparentChar(cord, (char)20, F_BLACK);
+	mSurface->drawTransparentChar(cord, (char)2, F_BLACK);
 }
 
 void CSceneView::renderCharacterInfo() {
