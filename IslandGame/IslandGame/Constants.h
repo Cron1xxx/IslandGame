@@ -88,12 +88,3 @@
 #define KEY_Y			0x59
 #define KEY_Z			0x5A
 
-#define	FIELD_HEIGHT 31
-#define FIELD_WIGHT 96
-
-#define S_WATER 0x00
-#define S_GROUND 0x01
-#define S_ROAD 0x02
-#define S_SAND 0x03
-#define S_FOREST 0x04
-#define S_ACTIVITY 0x05

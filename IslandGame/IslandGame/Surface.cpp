@@ -87,6 +87,11 @@ void CSurface::drawRect(_RECTL rect, EFrameType frameType, WORD attr, CString te
 
 }
 
+void CSurface::drawRectWithCaption(_RECTL rect, EFrameType frameType, WORD attr, CString caption) {
+	drawRect(rect, frameType, attr);
+	drawText({SHORT(rect.left + 2), SHORT(rect.top)}, caption, attr);
+}
+
 void CSurface::drawText(COORD pos, CString text, WORD attr) {
 	for (SHORT i = 0; i < text.GetLength(); i++) {
 		drawChar({(SHORT)(pos.X + i), pos.Y}, text[i], attr);
@@ -97,5 +102,12 @@ void CSurface::drawChar(COORD pos, CHAR ch, WORD attr) {
 	if (pos.X >= 0 && pos.X < mSize.cx && pos.Y >= 0 && pos.Y < mSize.cy) {
 		mBuffer[pos.Y][pos.X].Char.AsciiChar = ch;
 		mBuffer[pos.Y][pos.X].Attributes = attr;
+	}
+}
+
+void CSurface::drawTransparentChar(COORD pos, CHAR ch, SHORT color) {
+	if (pos.X >= 0 && pos.X < mSize.cx && pos.Y >= 0 && pos.Y < mSize.cy) {
+		SHORT backgroundColor = mBuffer[pos.Y][pos.X].Attributes & 0xF0;
+		drawChar(pos, ch, color | backgroundColor);
 	}
 }
