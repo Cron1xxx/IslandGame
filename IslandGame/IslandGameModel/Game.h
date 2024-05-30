@@ -6,6 +6,7 @@
 #include <map>
 #include <vector>
 #include "GameStructures.h"
+#include "Thing.h"
 
 
 using namespace std;
@@ -24,24 +25,7 @@ public:
 		static LOCATION_INFO convertToLocationInfo(WORD word);
 	};
 
-	class CThing {
-	public:
-		CString mName;
-		CString mDescription;
-		
-		CThing(CString name, CString description) {
-			mName = name;
-			mDescription = description;
-		}
-
-		bool operator == (const CThing& t) {
-			if (mName == t.mName) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	};
+	
 
 	class CCharacter {
 	public:
@@ -66,8 +50,12 @@ public:
 
 		EXCHANGE_RECORD mNeed;
 		EXCHANGE_RECORD mOffer;
-	};
 
+		EXCHANGE_RECORD offerToExchange (EXCHANGE_RECORD forExchange);
+	};
+	
+	bool mGameOver = false;
+	bool mIsWin = false;
 	COORD mPosCharacter;
 	CScene* mpCurrentScene;
 	CCharacter mCharacter;

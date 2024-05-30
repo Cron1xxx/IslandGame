@@ -4,7 +4,6 @@
 using namespace std;
 
 CSceneView::CSceneView(CGame** game, SIZE size, HANDLE hConsoleOutput) : CAbstractView(game, size, hConsoleOutput) {
-	mpGame = game;
 	msCaption = "Scene";
 	drawCaption();
 	msBottomString = formBottomString();

@@ -109,3 +109,11 @@ void CGame::moveCharacter(EDirection direction) {
 	mPosCharacter = nextPos;
 }
 
+EXCHANGE_RECORD CGame::CActivity::offerToExchange(EXCHANGE_RECORD forExchange) {
+	if (!mExchanged && (mFree || forExchange == mNeed)) {
+		mExchanged = true;
+		return mOffer;
+	} else {
+		return {EExchangeType::NOTHING};
+	}
+}
