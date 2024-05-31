@@ -50,18 +50,19 @@ public:
 
 		EXCHANGE_RECORD mNeed;
 		EXCHANGE_RECORD mOffer;
-
-		EXCHANGE_RECORD offerToExchange (EXCHANGE_RECORD forExchange);
 	};
 	
 	bool mGameOver = false;
 	bool mIsWin = false;
 	COORD mPosCharacter;
 	CScene* mpCurrentScene;
+	CActivity* mpCurrentActivity;
 	CCharacter mCharacter;
 	map<CString, CScene*> mScenes;
+	map<SHORT, CActivity*> mActivities;
 	CGame();
 	void moveCharacter(EDirection direction);
+	void offerExchange();
 
 };
 

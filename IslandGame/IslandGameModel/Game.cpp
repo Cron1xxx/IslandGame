@@ -99,21 +99,80 @@ void CGame::moveCharacter(EDirection direction) {
 		nextPos.X = FIELD_WIGHT - 1;
 		// OBSTACLE
 	} else if (mpCurrentScene->mField[nextPos.Y][nextPos.X].bObstacle) {
+		// ACTIVITY
+		if (mpCurrentScene->mField[nextPos.Y][nextPos.X].sObject == S_ACTIVITY) {
+			mpCurrentActivity = mActivities.at(mpCurrentScene->mField[nextPos.Y][nextPos.X].sAttr);
+			mpCurrentActivity->mVisited = true;
+		}
 		nextPos = mPosCharacter;
 	}
 
 	if (nextPos.X != mPosCharacter.X || nextPos.Y != mPosCharacter.Y) {
 		mCharacter.health -= mpCurrentScene->mField[nextPos.Y][nextPos.X].sPenalty;
+		if (mCharacter.health <= 0) {
+			mGameOver = true;
+		}
 	}
 
 	mPosCharacter = nextPos;
 }
 
-EXCHANGE_RECORD CGame::CActivity::offerToExchange(EXCHANGE_RECORD forExchange) {
-	if (!mExchanged && (mFree || forExchange == mNeed)) {
-		mExchanged = true;
-		return mOffer;
+void CGame::offerExchange() {
+	if (mpCurrentActivity == nullptr) {
+		return;
+	}
+	if (mpCurrentActivity->mExchanged) {
+		return;
+	}
+
+	bool exchange = false; 
+
+	if (!mpCurrentActivity->mFree) {
+		if (mpCurrentActivity->mNeed.ExchangeType == EExchangeType::MONEY) {
+			if (mCharacter.coins >= mpCurrentActivity->mNeed.Exchange.MoneyAmount) {
+				mCharacter.coins -= mpCurrentActivity->mNeed.Exchange.MoneyAmount;
+				exchange = true;
+			}
+		}
+		if (mpCurrentActivity->mNeed.ExchangeType == EExchangeType::THING) {
+			vector <CThing*>::iterator i;
+			for (CThing* thing : mCharacter.bag) {
+				if (*(mpCurrentActivity->mNeed.Exchange.Thing) == *thing) {
+					mCharacter.bag.erase(i);
+					exchange = true;
+					break;
+				}
+				i++;
+			}
+		}
+		if (mpCurrentActivity->mNeed.ExchangeType == EExchangeType::HEALTH) {
+			if (mCharacter.health >= mpCurrentActivity->mNeed.Exchange.Health) {
+				mCharacter.health -= mpCurrentActivity->mNeed.Exchange.Health;
+				exchange = true;
+			}
+		}
 	} else {
-		return {EExchangeType::NOTHING};
+		exchange = true;
+	}
+
+	if (exchange) {
+		
+		if (mpCurrentActivity->mOffer.ExchangeType == EExchangeType::MONEY) {
+			mCharacter.coins += mpCurrentActivity->mOffer.Exchange.MoneyAmount;
+		}
+
+		if (mpCurrentActivity->mOffer.ExchangeType == EExchangeType::THING) {
+			mCharacter.bag.push_back(mpCurrentActivity->mOffer.Exchange.Thing);
+		}
+
+		if (mpCurrentActivity->mOffer.ExchangeType == EExchangeType::RELOCATION) {
+			mPosCharacter.X = mpCurrentActivity->mOffer.Exchange.RelocationCoord.X;
+			mPosCharacter.Y = mpCurrentActivity->mOffer.Exchange.RelocationCoord.Y;
+		}
+
+		if (mpCurrentActivity->mOffer.ExchangeType == EExchangeType::ESCAPE) {
+			mGameOver = true;
+			mIsWin = true;
+		}
 	}
 }

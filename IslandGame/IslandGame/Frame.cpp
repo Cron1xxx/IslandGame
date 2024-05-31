@@ -6,8 +6,10 @@
 #include "MenuView.h"
 #include "SceneView.h"
 #include "IntroView.h"
+#include "GameOverView.h"
 #include <strsafe.h>
 #include "Constants.h"
+
 
 
 CFrame::CFrame() {
@@ -27,6 +29,7 @@ CFrame::CFrame() {
 	mViews.insert(std::make_pair(EViewType::MENU_VIEW, new CMenuView(&mpGame, size, hConsoleOutput)));
 	mViews.insert(std::make_pair(EViewType::SCENE_VIEW, new CSceneView(&mpGame, size, hConsoleOutput)));
 	mViews.insert(std::make_pair(EViewType::INTRO_VIEW, new CIntroView(&mpGame, size, hConsoleOutput)));
+	mViews.insert(std::make_pair(EViewType::GAME_OVER_VIEW, new CGameOverView(&mpGame, size, hConsoleOutput)));
 }
 
 void CFrame::run() {

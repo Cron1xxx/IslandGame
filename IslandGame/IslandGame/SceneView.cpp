@@ -16,11 +16,15 @@ NEXT_VIEW_INFO CSceneView::show() {
 	mExitToMainMenu = false;
 	NEXT_VIEW_INFO nextView;
 	while (true) {
+		if ((*mpGame)->mGameOver) {
+			nextView = {EViewType::GAME_OVER_VIEW};
+			break;
+		}
 		if (mExitToMainMenu == true) {
 			nextView = {EViewType::MENU_VIEW};
 			mExitToMainMenu = false;
 			break;
-		}
+		} 
 		renderField();
 		renderCharacter();
 		renderCharacterInfo();
