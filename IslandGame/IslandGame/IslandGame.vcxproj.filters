@@ -42,12 +42,15 @@
     <ClCompile Include="GameOverView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BagView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ActivityView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Frame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="View.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardHandler.h">
@@ -78,6 +81,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameOverView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BagView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ActivityView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

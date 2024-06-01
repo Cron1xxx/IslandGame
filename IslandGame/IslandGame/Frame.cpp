@@ -7,8 +7,11 @@
 #include "SceneView.h"
 #include "IntroView.h"
 #include "GameOverView.h"
+#include "BagView.h"
+#include "ActivityView.h"
 #include <strsafe.h>
 #include "Constants.h"
+
 
 
 
@@ -30,27 +33,28 @@ CFrame::CFrame() {
 	mViews.insert(std::make_pair(EViewType::SCENE_VIEW, new CSceneView(&mpGame, size, hConsoleOutput)));
 	mViews.insert(std::make_pair(EViewType::INTRO_VIEW, new CIntroView(&mpGame, size, hConsoleOutput)));
 	mViews.insert(std::make_pair(EViewType::GAME_OVER_VIEW, new CGameOverView(&mpGame, size, hConsoleOutput)));
+	mViews.insert(std::make_pair(EViewType::BAG_VIEW, new CBagView(&mpGame, size, hConsoleOutput)));
+	mViews.insert(std::make_pair(EViewType::ACTIVITY_VIEW, new CActivityView(&mpGame, size, hConsoleOutput)));
 }
 
 void CFrame::run() {
 	mKeyboardHandlingThread = new thread(&CKeyboardHandler::run, mpKeyboardHandler);
-	NEXT_VIEW_INFO nextView;
-	nextView.mViewType = EViewType::MENU_VIEW;
+	EViewType nextView;
+	nextView = EViewType::MENU_VIEW;
 	setActiveView(nextView);
 	
 	while (true) {
 		nextView = mpActiveView->show();
-		if (nextView.mViewType == EViewType::EXIT) {
+		if (nextView == EViewType::EXIT) {
 			exit(0);
 		}
 		setActiveView(nextView);
 	}
-	
 }
 
 
-void CFrame::setActiveView(NEXT_VIEW_INFO nextViewInfo) {
-	auto view = mViews.at(nextViewInfo.mViewType);
+void CFrame::setActiveView(EViewType nextViewType) {
+	auto view = mViews.at(nextViewType);
 	mpKeyboardHandler->setListener(view);
 	mpActiveView = view;
 }

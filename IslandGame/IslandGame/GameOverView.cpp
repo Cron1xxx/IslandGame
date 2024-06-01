@@ -5,27 +5,38 @@ CGameOverView::CGameOverView(CGame** game, SIZE size, HANDLE hConsoleOutput) : C
 	drawBottomString();
 }
 
-NEXT_VIEW_INFO CGameOverView::show() {
+EViewType CGameOverView::show() {
 	mExitToMainMenuView = false;
-	mSurface->drawText({ 30,10 }, "Game Over!", F_RED | F_BLACK);
+	clean();
+	vector<CString> text;
+	text.push_back("Game Over!");
+	text.push_back("");
 	if ((*mpGame)->mIsWin) {
-		mSurface->drawText({ 30,11 }, "You win!", F_RED | F_BLACK);
+		text.push_back("You win!");
 	} else {
-		mSurface->drawText({ 30,11 }, "You lose!", F_RED | F_BLACK);
+		text.push_back("You lose!");
+		text.push_back("Next time be more clever.");
 	}
+	drawText(text, EAlignment::CENTER, EAlignment::CENTER, F_WHITE | B_BLACK);
+
 	while (!mExitToMainMenuView) {
 		mSurface->print();
 		Sleep(100);
 	}
-	delete (*mpGame);
-	return {EViewType::MENU_VIEW};
+
+	delete *mpGame;
+	*mpGame = nullptr;
+	
+	return EViewType::MENU_VIEW;
 }
 
 void CGameOverView::keypressed(WORD keyCode) {
-    mExitToMainMenuView = true;
+	if (keyCode == KEY_ENTER) {
+		mExitToMainMenuView = true;
+	}
 }
 
 CString CGameOverView::formBottomString() {
     
-    return "Press any key...";
+    return "Press ENTER to continue...";
 }

@@ -24,6 +24,6 @@ private:
 
 	CKeyboardHandler* mpKeyboardHandler;
 	thread* mKeyboardHandlingThread;
-	void setActiveView(NEXT_VIEW_INFO nextViewInfo);
+	void setActiveView(EViewType nextViewType);
 };
 

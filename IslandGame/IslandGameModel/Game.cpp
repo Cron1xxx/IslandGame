@@ -7,13 +7,30 @@
 #include "Scene_4.h"
 
 CGame::CGame() {
+	// scenes:
 	mScenes.insert(std::make_pair("S1", new CScene("S1", *field_1, "S2", "", "", "S3")));
 	mScenes.insert(std::make_pair("S2", new CScene("S2", *field_2, "", "S1", "", "S4")));
 	mScenes.insert(std::make_pair("S3", new CScene("S3", *field_3, "S4", "", "S1", "")));
 	mScenes.insert(std::make_pair("S4", new CScene("S4", *field_4, "", "S3", "S2", "")));
+	// activities:
+	initActivities();
+
 	mpCurrentScene = mScenes.at("S3");
 	mPosCharacter.X = 50;
 	mPosCharacter.Y = 25;
+}
+
+CGame::~CGame() {
+	// release memory
+	for (map<CString, CScene*>::iterator it = mScenes.begin(); it != mScenes.end(); it++) {
+		delete it->second;
+	}
+	mScenes.clear();
+
+	for (map<SHORT, CActivity*>::iterator it = mActivities.begin(); it != mActivities.end(); it++) {
+		delete it->second;
+	}
+	mActivities.clear();
 }
 
 CGame::CScene::CScene(
@@ -102,7 +119,6 @@ void CGame::moveCharacter(EDirection direction) {
 		// ACTIVITY
 		if (mpCurrentScene->mField[nextPos.Y][nextPos.X].sObject == S_ACTIVITY) {
 			mpCurrentActivity = mActivities.at(mpCurrentScene->mField[nextPos.Y][nextPos.X].sAttr);
-			mpCurrentActivity->mVisited = true;
 		}
 		nextPos = mPosCharacter;
 	}
@@ -124,7 +140,6 @@ void CGame::offerExchange() {
 	if (mpCurrentActivity->mExchanged) {
 		return;
 	}
-
 	bool exchange = false; 
 
 	if (!mpCurrentActivity->mFree) {
@@ -175,4 +190,81 @@ void CGame::offerExchange() {
 			mIsWin = true;
 		}
 	}
+}
+
+
+void CGame::initActivities() {
+	mScenes.insert(std::make_pair("S4", new CScene("S4", *field_4, "", "S3", "S2", "")));
+	CString title;
+	CString inhabitant;
+	bool free;
+	EXCHANGE_RECORD need;
+	EXCHANGE_RECORD offer;
+	vector<CString> textFirstVisit;
+	vector<CString> textOthersVisitsBeforeExchange;
+	vector<CString> textAfterExchange;
+
+	//A1
+	title = "Harbor";
+	inhabitant = "Jack";
+	free = false;
+	need = EXCHANGE_RECORD();
+	need.ExchangeType = EExchangeType::MONEY;
+	need.Exchange.MoneyAmount = 10;
+	offer = EXCHANGE_RECORD();
+	offer.ExchangeType = EExchangeType::ESCAPE;
+	textFirstVisit.clear();
+	textFirstVisit.push_back("Hi stranger!!!");
+	textFirstVisit.push_back("");
+	textFirstVisit.push_back("I'm Jack, harbor master.");
+	textFirstVisit.push_back("You can rent a boat and leave the island but it will cost 10 coins.");
+	textFirstVisit.push_back("Do you have any???.");
+	textOthersVisitsBeforeExchange.clear();
+	textOthersVisitsBeforeExchange.push_back("Hi! Glad to see you again stranger.");
+	textOthersVisitsBeforeExchange.push_back("Did you find money?");
+	textAfterExchange.clear();
+	mActivities.insert(std::make_pair(1, 
+		new CActivity(title, inhabitant, free, need, offer, textFirstVisit, textOthersVisitsBeforeExchange, textAfterExchange)));
+
+	//A2
+	title = "Fishermen's house";
+	inhabitant = "Igor";
+	free = false;
+	need = EXCHANGE_RECORD();
+	need.ExchangeType = EExchangeType::NOTHING;
+	need.Exchange.MoneyAmount = 10;
+	offer = EXCHANGE_RECORD();
+	offer.ExchangeType = EExchangeType::THING;
+	textFirstVisit.clear();
+	textFirstVisit.push_back("Hi man!!!");
+	textFirstVisit.push_back("");
+	textFirstVisit.push_back("I'm Igor, I'm fisher.");
+	textFirstVisit.push_back("Can you take this rod and pass it to the monk from island?");
+	textFirstVisit.push_back("He will be so glad.");
+	textOthersVisitsBeforeExchange.clear();
+	textOthersVisitsBeforeExchange.push_back("Hi, how are you?");
+	textOthersVisitsBeforeExchange.push_back("How about a rod?");
+	textAfterExchange.clear();
+	textAfterExchange.push_back("How are you?");
+	mActivities.insert(std::make_pair(2,
+		new CActivity(title, inhabitant, free, need, offer, textFirstVisit, textOthersVisitsBeforeExchange, textAfterExchange)));
+}
+
+
+CGame::CActivity::CActivity(CString title, 
+		CString inhabitant, 
+		bool free, 
+		EXCHANGE_RECORD need, 
+		EXCHANGE_RECORD offer, 
+		vector<CString> textFirstVisit, 
+		vector<CString> textOthersVisitsBeforeExchange, 
+		vector<CString> textAfterExchange) : 
+	mInhabitant(inhabitant), 
+	mFree(free), 
+	mNeed(need), 
+	mOffer(offer), 
+	mTextFirstVisit(textFirstVisit), 
+	mTextOthersVisitsBeforeExchange(textOthersVisitsBeforeExchange),
+	mTextAfterExchange(textAfterExchange)
+{
 }

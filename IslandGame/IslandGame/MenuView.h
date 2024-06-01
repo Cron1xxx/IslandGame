@@ -14,38 +14,38 @@ private:
 			BOOL mbEnable;
 			CGame** mpGame;
 
-			virtual NEXT_VIEW_INFO action() = 0;
+			virtual EViewType action() = 0;
 		};
 
 		class CNewGameMenuItem : public CAbstractMenuItem {
 		public:
 			CNewGameMenuItem(CString caption, BOOL enable, CGame** game);
-			NEXT_VIEW_INFO action();
+			EViewType action();
 		};
 
 		class CLoadGameMenuItem : public CAbstractMenuItem {
 		public:
 			CLoadGameMenuItem(CString caption, BOOL enable, CGame** game);
-			NEXT_VIEW_INFO action();
+			EViewType action();
 		};
 
 		class CSaveGameMenuItem : public CAbstractMenuItem {
 		public:
 			CSaveGameMenuItem(CString caption, BOOL enable, CGame** game);
-			NEXT_VIEW_INFO action();
+			EViewType action();
 		};
 
 		class CContinueGameMenuItem : public CAbstractMenuItem {
 		public:
 			CContinueGameMenuItem(CString caption, BOOL enable, CGame** game);
-			NEXT_VIEW_INFO action();
+			EViewType action();
 		};
 
 
 		class CExitMenuItem : public CAbstractMenuItem {
 		public:
 			CExitMenuItem(CString caption, BOOL enable, CGame** game);
-			NEXT_VIEW_INFO action();
+			EViewType action();
 		};
 		
 		CMenu(CGame** game);
@@ -54,7 +54,7 @@ private:
 		SHORT mMaxItemCaptionLength = 0;
 		//scroll menu UP or DOWN
 		void scroll(EMenuScroll direction);
-		NEXT_VIEW_INFO action();
+		EViewType action();
 
 	private:
 		CAbstractMenuItem* mCurrentItem;
@@ -63,7 +63,7 @@ private:
 	};
 public:
 	CMenuView(CGame** game, SIZE size, HANDLE hConsoleOutput);
-	NEXT_VIEW_INFO show();
+	EViewType show();
 	void keypressed(WORD keyCode);
 
 private:

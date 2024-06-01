@@ -5,7 +5,7 @@ class CGameOverView : public CAbstractView {
 
 public:
 	CGameOverView(CGame** game, SIZE size, HANDLE hConsoleOutput);
-	NEXT_VIEW_INFO show();
+	EViewType show();
 	void keypressed(WORD keyCode);
 private:
 	bool mExitToMainMenuView = false;

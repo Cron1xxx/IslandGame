@@ -11,7 +11,7 @@ CMenuView::CMenuView(CGame** game, SIZE size, HANDLE hConsoleOutput) : CAbstract
 
 }
 
-NEXT_VIEW_INFO CMenuView::show() {
+EViewType CMenuView::show() {
 	mExit = false;
 	
 	while (!mExit) {
@@ -115,7 +115,7 @@ void CMenuView::CMenu::scroll(EMenuScroll direction) {
 	}
 }
 
-NEXT_VIEW_INFO CMenuView::CMenu::action() {
+EViewType CMenuView::CMenu::action() {
 	return mCurrentItem->action();
 }
 
@@ -133,47 +133,47 @@ void CMenuView::CMenu::setCurrentPosition(SHORT ind) {
 
 CMenuView::CMenu::CNewGameMenuItem::CNewGameMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
-NEXT_VIEW_INFO CMenuView::CMenu::CNewGameMenuItem::action() {
+EViewType CMenuView::CMenu::CNewGameMenuItem::action() {
 	if (*mpGame != nullptr) {
 		delete *mpGame;
 	}
 	*mpGame = new CGame();
-	return {EViewType::INTRO_VIEW};
+	return EViewType::INTRO_VIEW;
 }
 
 CMenuView::CMenu::CExitMenuItem::CExitMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
-NEXT_VIEW_INFO CMenuView::CMenu::CExitMenuItem::action() {
-	return {EViewType::EXIT};
+EViewType CMenuView::CMenu::CExitMenuItem::action() {
+	return EViewType::EXIT;
 }
 
 CMenuView::CMenu::CLoadGameMenuItem::CLoadGameMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
 //TODO:
-NEXT_VIEW_INFO CMenuView::CMenu::CLoadGameMenuItem::action() {
+EViewType CMenuView::CMenu::CLoadGameMenuItem::action() {
 	if (*mpGame != nullptr) {
 		delete *mpGame;
 	}
 	//TODO
 	*mpGame = new CGame();
-	return {EViewType::MENU_VIEW};
+	return EViewType::MENU_VIEW;
 }
 
 CMenuView::CMenu::CSaveGameMenuItem::CSaveGameMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
-NEXT_VIEW_INFO CMenuView::CMenu::CSaveGameMenuItem::action() {
+EViewType CMenuView::CMenu::CSaveGameMenuItem::action() {
 	if (*mpGame != nullptr) {
 		//TODO
 	}
-	return { EViewType::MENU_VIEW };
+	return EViewType::MENU_VIEW;
 }
 
 CMenuView::CMenu::CContinueGameMenuItem::CContinueGameMenuItem(CString caption, BOOL enable, CGame** game) : CAbstractMenuItem(caption, enable, game) {}
 
-NEXT_VIEW_INFO CMenuView::CMenu::CContinueGameMenuItem::action() {
+EViewType CMenuView::CMenu::CContinueGameMenuItem::action() {
 	if (*mpGame != nullptr) {
-		return { EViewType::SCENE_VIEW };
+		return EViewType::SCENE_VIEW;
 	} else {
-		return { EViewType::MENU_VIEW };
+		return EViewType::MENU_VIEW;
 	}
 }

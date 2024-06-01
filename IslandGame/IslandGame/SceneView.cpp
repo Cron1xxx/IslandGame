@@ -12,19 +12,27 @@ CSceneView::CSceneView(CGame** game, SIZE size, HANDLE hConsoleOutput) : CAbstra
 	mSurface->drawRect({1, 5, mpSize.cx - 2, mpSize.cy - 3}, EFrameType::SINGLE, F_WHITE);
 }
 
-NEXT_VIEW_INFO CSceneView::show() {
+EViewType CSceneView::show() {
 	mExitToMainMenu = false;
-	NEXT_VIEW_INFO nextView;
+	mExitToBagView = false;
+	EViewType nextView;
 	while (true) {
 		if ((*mpGame)->mGameOver) {
-			nextView = {EViewType::GAME_OVER_VIEW};
+			nextView = EViewType::GAME_OVER_VIEW;
 			break;
 		}
 		if (mExitToMainMenu == true) {
-			nextView = {EViewType::MENU_VIEW};
-			mExitToMainMenu = false;
+			nextView = EViewType::MENU_VIEW;
 			break;
 		} 
+		if (mExitToBagView == true) {
+			nextView = EViewType::BAG_VIEW;
+			break;
+		}
+		if ((*mpGame)->mpCurrentActivity != nullptr) {
+			nextView = EViewType::ACTIVITY_VIEW;
+			break;
+		}
 		renderField();
 		renderCharacter();
 		renderCharacterInfo();
@@ -50,6 +58,9 @@ void CSceneView::keypressed(WORD keyCode) {
 	if (keyCode == KEY_ARROW_RIGHT) {
 		(*mpGame)->moveCharacter(EDirection::RIGHT);
 	}
+	if (keyCode == KEY_B) {
+		mExitToBagView = true;
+	}
 }
 
 CString CSceneView::formBottomString() {
@@ -58,7 +69,7 @@ CString CSceneView::formBottomString() {
 	str.AppendChar((char)24);
 	str.AppendChar((char)26);
 	str.AppendChar((char)25);
-	str = str + " - Move, M - Main Menu";
+	str = str + " - Move, M - Main Menu, B - show bag";
 	return str;
 }
 

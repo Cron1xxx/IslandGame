@@ -25,8 +25,6 @@ public:
 		static LOCATION_INFO convertToLocationInfo(WORD word);
 	};
 
-	
-
 	class CCharacter {
 	public:
 		SHORT health = CHARACTER_HEALTH_DEFAULT;
@@ -38,31 +36,44 @@ public:
 	public:
 		CString mTitle;
 		CString mInhabitant;
-		//first greeting
-		CString mText1;
-		//second end others greetings before exchange
-		CString mText2;
-		//all greetings after exchange
-		CString mText3;
-		bool mVisited;
-		bool mExchanged;
+		
+		bool mVisited = false;
+		bool mExchanged = false;
 		bool mFree;
 
 		EXCHANGE_RECORD mNeed;
 		EXCHANGE_RECORD mOffer;
+
+		CActivity(CString title, 
+				CString inhabitant, 
+				bool free, 
+				EXCHANGE_RECORD need, 
+				EXCHANGE_RECORD offer, 
+				vector<CString> textFirstVisit, 
+				vector<CString> textOthersVisitsBeforeExchange, 
+				vector<CString> textAfterExchange);
+		//first greeting
+		vector<CString> mTextFirstVisit;
+		//second end others greetings before exchange
+		vector<CString> mTextOthersVisitsBeforeExchange;
+		//all greetings after exchange
+		vector<CString> mTextAfterExchange;
 	};
 	
 	bool mGameOver = false;
 	bool mIsWin = false;
 	COORD mPosCharacter;
-	CScene* mpCurrentScene;
-	CActivity* mpCurrentActivity;
+	CScene* mpCurrentScene = nullptr;
+	CActivity* mpCurrentActivity = nullptr;
 	CCharacter mCharacter;
 	map<CString, CScene*> mScenes;
 	map<SHORT, CActivity*> mActivities;
 	CGame();
+	~CGame();
 	void moveCharacter(EDirection direction);
 	void offerExchange();
 
+private:
+	void initActivities();
 };
 
