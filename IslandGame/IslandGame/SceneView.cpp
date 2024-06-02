@@ -34,6 +34,7 @@ EViewType CSceneView::show() {
 			break;
 		}
 		renderField();
+		renderActivitiesCaption();
 		renderCharacter();
 		renderCharacterInfo();
 		mSurface->print();
@@ -144,6 +145,21 @@ void CSceneView::renderCharacterInfoFrame() {
 	mSurface->drawRectWithCaption({1, 1, 30, 4}, EFrameType::SINGLE, F_WHITE|B_BLACK, " Character Info ");
 	mSurface->drawText({2, 2}, "Health:", F_WHITE | B_BLACK);
 	mSurface->drawText({2, 3}, "Coins :", F_WHITE | B_BLACK);
+}
+
+void CSceneView::renderActivitiesCaption() {
+	SHORT dx = 2, dy = 6;
+	auto field = (**mpGame).mpCurrentScene->mField;
+	CString activityTitle;
+	for (SHORT y = 0; y < FIELD_HEIGHT; y++) {
+		for (SHORT x = 0; x < FIELD_WIGHT; x++) {
+			if (field[y][x].sObject == S_ACTIVITY) {
+				activityTitle = (*mpGame)->mActivities.at(field[y][x].sAttr)->mTitle;
+				mSurface->drawTransparentText(
+					{(SHORT)(x + dx - activityTitle.GetLength() / 2),(SHORT) (y + dy - 1)}, activityTitle, F_WHITE);
+			}
+		}
+	}
 }
 
 

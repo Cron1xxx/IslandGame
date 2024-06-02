@@ -365,6 +365,7 @@ CGame::CActivity::CActivity(CString title,
 		vector<CString> textFirstVisit, 
 		vector<CString> textOthersVisitsBeforeExchange, 
 		vector<CString> textAfterExchange) : 
+	mTitle(title),
 	mInhabitant(inhabitant), 
 	mFree(free), 
 	mNeed(need), 

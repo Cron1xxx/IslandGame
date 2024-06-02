@@ -17,6 +17,7 @@ public:
 	void drawText(COORD pos, CString text, WORD attr);
 	void drawChar(COORD pos, CHAR ch, WORD attr);
 	void drawTransparentChar(COORD pos, CHAR ch, SHORT color);
+	void drawTransparentText(COORD pos, CString text, SHORT color);
 private:
 	SIZE mSize;
 	CHAR_INFO mBuffer[WINDOW_HEIGHT][WINDOW_WIGHT];

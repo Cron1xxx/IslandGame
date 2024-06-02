@@ -111,3 +111,9 @@ void CSurface::drawTransparentChar(COORD pos, CHAR ch, SHORT color) {
 		drawChar(pos, ch, color | backgroundColor);
 	}
 }
+
+void CSurface::drawTransparentText(COORD pos, CString text, SHORT color) {
+	for (SHORT i = 0; i < text.GetLength(); i++) {
+		drawTransparentChar({ (SHORT)(pos.X + i), pos.Y }, text[i], color);
+	}
+}

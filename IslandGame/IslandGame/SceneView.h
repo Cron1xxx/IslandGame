@@ -14,6 +14,7 @@ private:
 	void renderCharacter();
 	void renderCharacterInfo();
 	void renderCharacterInfoFrame();
+	void renderActivitiesCaption();
 
 };
 
