@@ -58,6 +58,9 @@ public:
 		vector<CString> mTextOthersVisitsBeforeExchange;
 		//all greetings after exchange
 		vector<CString> mTextAfterExchange;
+		vector<CString> mTextAfterSuccessfulExchange;
+		vector<CString> mTextAfterUnsuccessfulExchange;
+		vector<CString> getText();
 	};
 	
 	bool mGameOver = false;
@@ -68,10 +71,11 @@ public:
 	CCharacter mCharacter;
 	map<CString, CScene*> mScenes;
 	map<SHORT, CActivity*> mActivities;
+	map<CString, CThing*> mThings;
 	CGame();
 	~CGame();
 	void moveCharacter(EDirection direction);
-	void offerExchange();
+	bool offerExchange();
 
 private:
 	void initActivities();

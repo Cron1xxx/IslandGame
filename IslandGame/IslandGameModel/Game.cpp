@@ -7,6 +7,9 @@
 #include "Scene_4.h"
 
 CGame::CGame() {
+	// things:
+	mThings.insert(std::make_pair("Rod", new CThing("Rod", "The rod from Igor for passing to the monk")));
+
 	// scenes:
 	mScenes.insert(std::make_pair("S1", new CScene("S1", *field_1, "S2", "", "", "S3")));
 	mScenes.insert(std::make_pair("S2", new CScene("S2", *field_2, "", "S1", "", "S4")));
@@ -133,14 +136,15 @@ void CGame::moveCharacter(EDirection direction) {
 	mPosCharacter = nextPos;
 }
 
-void CGame::offerExchange() {
+bool CGame::offerExchange() {
+	bool exchange = false;
+
 	if (mpCurrentActivity == nullptr) {
-		return;
+		return exchange;
 	}
 	if (mpCurrentActivity->mExchanged) {
-		return;
+		return exchange;
 	}
-	bool exchange = false; 
 
 	if (!mpCurrentActivity->mFree) {
 		if (mpCurrentActivity->mNeed.ExchangeType == EExchangeType::MONEY) {
@@ -190,6 +194,8 @@ void CGame::offerExchange() {
 			mIsWin = true;
 		}
 	}
+
+	return exchange;
 }
 
 
@@ -229,12 +235,13 @@ void CGame::initActivities() {
 	//A2
 	title = "Fishermen's house";
 	inhabitant = "Igor";
-	free = false;
+	free = true;
 	need = EXCHANGE_RECORD();
 	need.ExchangeType = EExchangeType::NOTHING;
 	need.Exchange.MoneyAmount = 10;
 	offer = EXCHANGE_RECORD();
 	offer.ExchangeType = EExchangeType::THING;
+	offer.Exchange.Thing = mThings.at("Rod");
 	textFirstVisit.clear();
 	textFirstVisit.push_back("Hi man!!!");
 	textFirstVisit.push_back("");
@@ -267,4 +274,19 @@ CGame::CActivity::CActivity(CString title,
 	mTextOthersVisitsBeforeExchange(textOthersVisitsBeforeExchange),
 	mTextAfterExchange(textAfterExchange)
 {
+	// default 
+	mTextAfterSuccessfulExchange.push_back("Thank you!!!");
+	mTextAfterUnsuccessfulExchange.push_back("You have nothing interesting for me.");
+}
+
+vector<CString> CGame::CActivity::getText() {
+	if (mVisited) {
+		if (mExchanged) {
+			return mTextAfterExchange;
+		} else {
+			return mTextOthersVisitsBeforeExchange;
+		}
+	} else {
+		return mTextFirstVisit;
+	}
 }

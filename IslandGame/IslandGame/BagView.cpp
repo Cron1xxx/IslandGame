@@ -38,7 +38,9 @@ void CBagView::drawBagItems() {
 		text.push_back("The bag is empty.");
 	} else {
 		for (auto thing : bag) {
-			text.push_back(thing->mName);
+			CString str;
+			str.Format(_T("%s - %s"), thing->mName, thing->mDescription);
+			text.push_back(str);
 		}
 	}
 	drawText(text, EAlignment::CENTER, EAlignment::CENTER, F_WHITE|B_BLACK);

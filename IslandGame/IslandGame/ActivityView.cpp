@@ -11,7 +11,7 @@ CActivityView::CActivityView(CGame** game, SIZE size, HANDLE hConsoleOutput) : C
 EViewType CActivityView::show() {
 	mExitToSceneView = false;
 	clean();
-	drawText(getText(), EAlignment::CENTER, EAlignment::CENTER, F_WHITE | B_BLACK);
+	drawText((*mpGame)->mpCurrentActivity->getText(), EAlignment::CENTER, EAlignment::CENTER, F_WHITE | B_BLACK);
 
 	while (!mExitToSceneView) {
 		mSurface->print();
@@ -24,7 +24,18 @@ EViewType CActivityView::show() {
 
 void CActivityView::keypressed(WORD keyCode) {
 	if (keyCode == KEY_E) {
-		(*mpGame)->offerExchange();
+		if (!(*mpGame)->mpCurrentActivity->mExchanged) {
+			auto successful = (*mpGame)->offerExchange();
+			vector<CString> text;
+			clean();
+			if (successful) {
+				(*mpGame)->mpCurrentActivity->mExchanged = true;
+				text = (*mpGame)->mpCurrentActivity->mTextAfterSuccessfulExchange;
+			} else {
+				text = (*mpGame)->mpCurrentActivity->mTextAfterUnsuccessfulExchange;
+			}
+			drawText(text, EAlignment::CENTER, EAlignment::CENTER, F_WHITE | B_BLACK);
+		}
 	}
 	if (keyCode == KEY_ENTER) {
 		mExitToSceneView = true;
@@ -35,17 +46,3 @@ CString CActivityView::formBottomString() {
 	return "E - offer exchange, ENTER - leave activity";
 }
 
-vector<CString> CActivityView::getText() {
-	auto activity = (*mpGame)->mpCurrentActivity;
-	
-	if (activity->mVisited) {
-		if (activity->mExchanged) {
-			return activity->mTextAfterExchange;
-		} else {
-			return activity->mTextOthersVisitsBeforeExchange;
-		}
-	} else {
-		return activity->mTextFirstVisit;
-	}
-	return vector<CString>();
-}

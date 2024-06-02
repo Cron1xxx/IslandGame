@@ -9,7 +9,6 @@ public:
 private:
 	bool mExitToSceneView = false;
 	CString formBottomString();
-	vector<CString> getText();
 
 };
 
