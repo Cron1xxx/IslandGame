@@ -9,6 +9,7 @@
 CGame::CGame() {
 	// things:
 	mThings.insert(std::make_pair("Rod", new CThing("Rod", "The rod from Igor for passing to the monk")));
+	mThings.insert(std::make_pair("Chiken", new CThing("Chiken", "Just a chiken")));
 
 	// scenes:
 	mScenes.insert(std::make_pair("S1", new CScene("S1", *field_1, "S2", "", "", "S3")));
@@ -238,7 +239,6 @@ void CGame::initActivities() {
 	free = true;
 	need = EXCHANGE_RECORD();
 	need.ExchangeType = EExchangeType::NOTHING;
-	need.Exchange.MoneyAmount = 10;
 	offer = EXCHANGE_RECORD();
 	offer.ExchangeType = EExchangeType::THING;
 	offer.Exchange.Thing = mThings.at("Rod");
@@ -255,8 +255,107 @@ void CGame::initActivities() {
 	textAfterExchange.push_back("How are you?");
 	mActivities.insert(std::make_pair(2,
 		new CActivity(title, inhabitant, free, need, offer, textFirstVisit, textOthersVisitsBeforeExchange, textAfterExchange)));
-}
 
+	//A3
+	title = "Bich";
+	inhabitant = "Vlad";
+	free = true;
+	need = EXCHANGE_RECORD();
+	need.ExchangeType = EExchangeType::NOTHING;
+	offer = EXCHANGE_RECORD();
+	offer.ExchangeType = EExchangeType::RELOCATION;
+	offer.Exchange.RelocationCoord = { 40,15 };
+	textFirstVisit.clear();
+	textFirstVisit.push_back("Hi bro!!!");
+	textFirstVisit.push_back("");
+	textFirstVisit.push_back("I'm Vlad");
+	textFirstVisit.push_back("I have a boat, would you like swim to the other side?");
+	textOthersVisitsBeforeExchange.clear();
+	textOthersVisitsBeforeExchange.push_back("How are you?");
+	textAfterExchange.clear();
+	textAfterExchange.push_back("How are you?");
+	mActivities.insert(std::make_pair(3,
+		new CActivity(title, inhabitant, free, need, offer, textFirstVisit, textOthersVisitsBeforeExchange, textAfterExchange)));
+
+	//A6
+	title = "Other side of Bich";
+	inhabitant = "Vlad";
+	free = true;
+	need = EXCHANGE_RECORD();
+	need.ExchangeType = EExchangeType::NOTHING;
+	offer = EXCHANGE_RECORD();
+	offer.ExchangeType = EExchangeType::RELOCATION;
+	offer.Exchange.RelocationCoord = { 61,18 };
+	textFirstVisit.clear();
+	textFirstVisit.push_back("Hi again");
+	textFirstVisit.push_back("");
+	textFirstVisit.push_back("let's go to the other side?");
+	textOthersVisitsBeforeExchange.clear();
+	textOthersVisitsBeforeExchange.push_back("How are you?");
+	textAfterExchange.clear();
+	textAfterExchange.push_back("How are you?");
+	mActivities.insert(std::make_pair(6,
+		new CActivity(title, inhabitant, free, need, offer, textFirstVisit, textOthersVisitsBeforeExchange, textAfterExchange)));
+
+	//A7
+	title = "Åemple";
+	inhabitant = "monk Radagon";
+	free = true;
+	need = EXCHANGE_RECORD();
+	need.ExchangeType = EExchangeType::THING;
+	need.Exchange.Thing = mThings.at("Rod");
+	offer = EXCHANGE_RECORD();
+	offer.ExchangeType = EExchangeType::MONEY;
+	offer.Exchange.MoneyAmount = 5;
+	textFirstVisit.clear();
+	textFirstVisit.push_back("Hi I'am Radagon, monk");
+	textOthersVisitsBeforeExchange.clear();
+	textOthersVisitsBeforeExchange.push_back("I see you brought me my fishing rod");
+	textAfterExchange.clear();
+	textAfterExchange.push_back("Thank you! You can take 5 coins from the temple fund.");
+	mActivities.insert(std::make_pair(7,
+		new CActivity(title, inhabitant, free, need, offer, textFirstVisit, textOthersVisitsBeforeExchange, textAfterExchange)));
+
+	//A4
+	title = "Meadow";
+	inhabitant = "hunter Boris";
+	free = true;
+	need = EXCHANGE_RECORD();
+	need.ExchangeType = EExchangeType::HEALTH;
+	need.Exchange.Health = 150;
+	offer = EXCHANGE_RECORD();
+	offer.ExchangeType = EExchangeType::THING;
+	offer.Exchange.Thing = mThings.at("Chiken");
+	textFirstVisit.clear();
+	textFirstVisit.push_back("Hi I'am Boris, hunter");
+	textOthersVisitsBeforeExchange.clear();
+	textOthersVisitsBeforeExchange.push_back("Do you want to hunt chickens?");
+	textAfterExchange.clear();
+	textAfterExchange.push_back("Nice job, this chiken your");
+	mActivities.insert(std::make_pair(4,
+		new CActivity(title, inhabitant, free, need, offer, textFirstVisit, textOthersVisitsBeforeExchange, textAfterExchange)));
+
+	//A5
+	title = "Woodcutter's house";
+	inhabitant = "Woodcutter Kiril";
+	free = true;
+	need = EXCHANGE_RECORD();
+	need.ExchangeType = EExchangeType::THING;
+	need.Exchange.Thing = mThings.at("Chiken");
+	offer = EXCHANGE_RECORD();
+	offer.ExchangeType = EExchangeType::MONEY;
+	offer.Exchange.MoneyAmount = 5;
+	textFirstVisit.clear();
+	textFirstVisit.push_back("Hi I'am Kiril, Woodcutter");
+	textOthersVisitsBeforeExchange.clear();
+	textOthersVisitsBeforeExchange.push_back("Do you have some food? I am very hungry");
+	textOthersVisitsBeforeExchange.push_back("I can pay you 5 coins.");
+	textAfterExchange.clear();
+	textAfterExchange.push_back("Now I can work again");
+	mActivities.insert(std::make_pair(5,
+		new CActivity(title, inhabitant, free, need, offer, textFirstVisit, textOthersVisitsBeforeExchange, textAfterExchange)));
+}
+	
 
 CGame::CActivity::CActivity(CString title, 
 		CString inhabitant, 
