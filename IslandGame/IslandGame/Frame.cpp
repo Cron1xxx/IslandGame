@@ -54,7 +54,7 @@ void CFrame::run() {
 
 
 void CFrame::setActiveView(EViewType nextViewType) {
-	auto view = mViews.at(nextViewType);
+	CAbstractView* view = mViews.at(nextViewType);
 	mpKeyboardHandler->setListener(view);
 	mpActiveView = view;
 }

@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <Windows.h>
 #include <atlstr.h>
 #include "GameConstants.h"
@@ -7,7 +6,6 @@
 #include <vector>
 #include "GameStructures.h"
 #include "Thing.h"
-
 
 using namespace std;
 
