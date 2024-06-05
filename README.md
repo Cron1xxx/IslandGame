@@ -1,2 +1,2 @@
 # IslandGame
-C++ studying ptrogect
+C++ studying ptroject
